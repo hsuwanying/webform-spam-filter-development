@@ -19,7 +19,7 @@ A rule-based mechanism is very robost to catpture spam message, but it can make 
 To address the above issues, applying data analysis to generate spam patterns and insights into current features is a prerequisite in the spam filter development process, then developing a classification model that can achieve high accuracy and low false positive rate. Lastly, essential features of the spam filter performance are provided, and recommendations are given accordingly.
 
 ## Data Source
-There are 60021 rows and 19 columns in the original dataset, the target variable `label`, is a binary data has two class `spam` and `ham`. 
+There are 60021 rows and 19 columns in the original dataset, the target variable `label`, is a binary data has two class `spam` and `ham`. The image below shows the spam and ham messages distribution in the original dataset. 
 <img width="427" alt="label" src="https://user-images.githubusercontent.com/72688726/187207906-2581e40c-750f-444c-81dd-04a7d547ba24.png">
 
 ### Data Exploration and Modeling Process
