@@ -15,13 +15,13 @@ This research discusses theoretical aspects of spam filtering, web structure, an
 # Table of Content
  - [Background](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#background)
  - [Problem & Solution](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#problem--solution)
- - [Project Goal]()
- - [Data Source]()
- - [Methods]()
- - [Result]()
+ - [Project Goal](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#project-goal)
+ - [Data Source](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#data-source)
+ - [Methods](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#methods)
+ - [Result](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#result)
  - [Limitation & Recommadation](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#limitation--recommadation)
- - [Takeaways of the Project]()
- - [Tech Stack]()
+ - [Takeaways of the Project](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#takeaways-of-the-project)
+ - [Tech Stack](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#tech-stack)
 
 # Background
 # Problem & Solution
