@@ -15,6 +15,7 @@ FormCheck, a spam filtering system, is particularly used to detect unsolicited e
 
 ### Problem Statment
 When exploring the web form data, we found the data is highly skewed, in which the number of spam webforms accounts for more than 90% of the dataset; this is because the classification task is done based on a rule-based mechanism that makes the spam filter highly sensitive to suspicious messages. On the other hand, with an increasing volume of web form spam, a more efficient way to analyze web form data is needed.
+
 <img width="427" alt="label" src="https://user-images.githubusercontent.com/72688726/187201956-f054f4d5-a293-42a8-a9ba-ce2647c6e078.png">
 
 ## Solution
@@ -25,6 +26,7 @@ There are 60021 rows and 19 columns in the original dataset, the target variable
 
 ### Data Exploration and Modeling Process
 This project aims at incorporating machine learning for the use in contact form spam detection, therefore, the data-driven research design is chosen. The data-driven research combines a ground-up method and a deductive approach. The research process includes preprocessing, feature engineering, and data analytics, and modeling. 
+
 ![workflow](https://user-images.githubusercontent.com/72688726/187202318-91422f62-d3da-4065-93b8-a109feea42ab.png)
 ![model_building](https://user-images.githubusercontent.com/72688726/187202356-a386df3e-ce83-426f-afec-ee4ea8d6c8fc.jpg)
 
