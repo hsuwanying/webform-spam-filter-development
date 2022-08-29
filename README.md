@@ -4,7 +4,7 @@ Photo by [Mediocre Studio](https://unsplash.com/@paucasals?utm_source=unsplash&u
 # Form Check: Webform Spam Filter Development
 ### Developing a spam filter for detecting web form spam applied with feature selection techniques and classification models
 
-Master Thesis is submitted as part of the module for MSc in Applied Information and Data Science at School of Business, Lucerne University of Applied Science and Art. Due to the no disclose agreement, some content cannot be shared.
+Master Thesis is submitted as part of the module for MSc in Applied Information and Data Science at School of Business, Lucerne University of Applied Science and Art.
 
 ## Summary
 This research discusses theoretical aspects of spam filtering, web structure, and internet communication. Comparing web forms and email data structure lays the fundament for creating a spam filer architecture. Popular machine learning techniques with classification functions, namely non-linear statistical models and tree-based learning techniques, are reviewed; and three machine learning methods: **Logistic Regression, Decision Tree, and Random Forest**, are chosen for fitting models. **Confusion matrix** and **cross-validation** are deplyed to estimate the test errors of proposed models. The result shows, the Random Forest model has outperformed in classifying spam class and has **achieved 99% accuracy with the least test error rate 0.1%**. Insights generated through this research have provided recommendations for the future adjustment to the FormCheck spam filter.
@@ -12,8 +12,8 @@ This research discusses theoretical aspects of spam filtering, web structure, an
 # Background
 With the increasing usage of websites, web form has also become a new target for malware. Spammers often dump bulk messages that will blow up one’s inbox and steal data or harm websites by setting bugs or displaying harmful messages on a webpage. All the above would result in more problematic outcomes that can hurt a business's reputation, digital presence and finiacial lost.
 
-## FormCheck
-FormCheck, a rule-based spam filter system is designed for detecting spam web form. It utilizes a series of rules which includes: block list, IPs Addresses, domain providers, text categorization, and regular expression techniques to measure attributes and their properties.
+## Webform Spam Filter
+webform Spam Filter, a rule-based spam filter system is designed for detecting spam web form. It utilizes a series of rules which includes: block list, IPs Addresses, domain providers, text categorization, and regular expression techniques to measure attributes and their properties.
 
 ## Problem Statment
 A rule-based mechanism is very robost to catpture spam message, but it can make the spam filter highly sensitive to suspicious message and missclassify legitimate message into spam class. In addtion, the rule-system is adjust manualy which is insufficient with the increasing volume of web form spam, and therefore, a more efficient way to analyze web form data is needed.
