@@ -58,7 +58,7 @@ The header field `is_cookie` is empty and is very likely to be spam; one can con
 <img width="694" alt="cookies" src="https://user-images.githubusercontent.com/72688726/187211768-aea7deb9-1226-4b55-8720-b3200506c63e.png">
 
  - **Flag_count**: flag_count refers to the number of spam checks that have been applied in an observation. As seen in the graph below, the histogram on the left shows that the number of flag counts ranges from 4 to 14; in contracts, the number of flag counts in spam messages is 23 widespread from 3 to 25. More, the boxplot on the right indicates the quantile distribution of flag_count. It is visible that once a web form is checked with more than 14 rules, it is more likely to be spam. Therefore flag_count can be a good indicator for detecting spam forms.
- - 
+ 
 <img width="857" alt="flag_count" src="https://user-images.githubusercontent.com/72688726/187214227-c5958f8a-fb91-43c5-9260-fc4b5cf0833a.png">
 
 ### Behaviour Analysis 
