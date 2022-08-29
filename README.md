@@ -79,7 +79,7 @@ When building a machine learning model, having too many features brings issues s
 
  - 72 variables appear with green color means those are the essential features to judge if a web form is spam or ham; while variables are colored in red means they do not have an influential impact on the decision process and therefore be dropped in fitting a logistic regression model
 
- - Experiment 1: Logistic Regression, and use three Features Selection Methods
+ - **Experiment 1: Logistic Regression, and use three Features Selection Methods**
   - Method 1: use p-value select features which are statistic significat for fitting model 
   - Metood 2: use `drop1` method to get the lowest AIC
   - Metood 3: use `Boruta` to select important features
@@ -92,20 +92,22 @@ The Table below compares three methods with a full model `Logit.all`
 
 AIC is used to select a logistic model, as the less features the better due to modeling efficeincy, hence, `Logit.b72` is selected to compete with tree-based models
 
- - Experiment 2: Decision Tree
+ - **Experiment 2: Decision Tree**
 Classification tree `tree()`, `rpart()` and condition interference tree `ctree()` 
 The value of the complexity parameter (CP) is identified and the lowest cross-validation error.
 An optimal decision tree created by using the values generated above. In this model, predictors namely server_protocol, MESSAGE_URL_SPAM, accept_language, is_cookies, and IP_REPUTATION are used as the terminal notes for decision making.
 <img width="771" alt="pruning_tree" src="https://user-images.githubusercontent.com/72688726/187228602-c57f09e9-c93b-42f0-a141-e998575ea2bb.png">
 
- - Experiment 3: Random Forest
+ - **Experiment 3: Random Forest**
 T RF model has firstly fitted all predictors with default settings in `randomForest()` package. To improve the false positive rate, pruning tree is critical in building tree models. A significant drop is observed when growing 100 trees. However, the error rate becomes less visible and cannot be improved after using 300 trees. `tuneRF` and parameter `mtry` are used for tuning tree.
 
 <img width="795" alt="rf_pruning" src="https://user-images.githubusercontent.com/72688726/187229346-7afa54d6-da5f-4314-833c-0e178ed63746.png">
 
-
+## Reslut
+Confusion matrix, cross-validation, ROC, and AUC curves, are used to evaluate classifiers. The image below presents the performance of the FormCheck spam filter, Prediction refers to the value of the source column, and Target refers to the actual value of the label column.
 <img width="573" alt="Cofusion_matrix" src="https://user-images.githubusercontent.com/72688726/187224895-0a8825b4-e431-4637-aab9-1da98f715790.png">
 
+Three models: Logistic Regression, Decision Tree, and Radom Forest are evaluate with Accuracy, error rate, and false-positive rate.
 **Evaluation FormCheck and proposed classifiers performance**
 | Classifier    | Accuracy | Error Rate | FP rate | F1     |
 | ------------- | -------- | ---------- | ------- | ------ |
@@ -114,8 +116,9 @@ T RF model has firstly fitted all predictors with default settings in `randomFor
 | `tree`        | 0.9974   | 0.0026     | 0.0195  | 0.9988 |
 | `rforest`     | 0.9999   | 0.0010     | 0.0162  | 0.9995 |
 
+The aim of this research is to find a model that maximizes the predictive performance of classifying spam web forms. Data were split into training and testing sets for model fitting, and were accessed by applying 10-fold cross-validation.
 <img width="1010" alt="cv-test" src="https://user-images.githubusercontent.com/72688726/187224342-4c9298dd-5320-4570-a02d-a77ad954a97d.png">
-Three classifiers were run on the training dataset testing dataset to achieve reliable results, efficiency, and accuracy of training data were accessed by applying 10-fold cross-validation
+
 
 #### Identify Important Features for Spam Filtering
 In tree-based models the function `varImpPlot()` allow us to examine the important features of the proposed models with graphical output. Variable importance measures the contribution of each variable by assessing the mean decrease accuracy. The lower the value, the less critical toward a model; the mean decreased Gini measures the purity of the end nodes of branches in a model, the lower the Gini value, the better the feature can impact the decision.
@@ -135,7 +138,7 @@ In tree-based models the function `varImpPlot()` allow us to examine the importa
 Features used in the logistic regression are very different from the other two models, this would require further investigation and experiments to test with different combinations of variables. However, this approach allows us to confirm variables: server_protocol, is_cookies, accept_language, ACCEPT_LANG_NULL, flag_count, and MESSAGE_URLS are important for spam detection in this research.
 
 ## Conclusion & Recommadation
-This research has shown an improvement in assessments such as acracy, error rate, and specificity with all proposed classifiers, which proves that a spam filter designed with a machine learning approach can achieve as good performance as a rule-based protocol. Nevertheless, as the evolution of spam detection techniques is changed from time to time, more advanced techniques or influential factors need to be considered. Three recommendations are provided as follows:
+This research has shown an improvement in assessments such as acracy, error rate, and specificity with all proposed classifiers, which proves that a spam filter designed with a machine learning approach can achieve as good performance as a rule-based protocol and the spam classifier build with random forest model has the best performace amongest other classifiers. Nevertheless, as the evolution of spam detection techniques is changed from time to time, more advanced techniques or influential factors need to be considered. Three recommendations are provided as follows:
 
 ### Establish Data collection and processing strategies
 Through the research process, features extracted from the header fields play significant roles that impact on spam recognition process, which echoes the findings from previous research and study. Hence, having clear guidance and data collection strategies is essential to improve data quality and improve the spam filter system.
