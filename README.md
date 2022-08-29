@@ -1,42 +1,44 @@
-# Form Check: Webform Spam Filter Development
-#### developing a spam filter for detecting web form spam applied with feature selection techniques and classification models
-
 ![mediocre-studio-1Gvog1VdtDA-unsplash](https://user-images.githubusercontent.com/72688726/187232061-26b99efe-2e5b-4cd3-a354-385624b1ed06.jpg)
 Photo by [Mediocre Studio](https://unsplash.com/@paucasals?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/spam?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
+# Form Check: Webform Spam Filter Development
+### Developing a spam filter for detecting web form spam applied with feature selection techniques and classification models
 
 Master Thesis is submitted as part of the module for MSc in Applied Information and Data Science at School of Business, Lucerne University of Applied Science and Art. Due to the no disclose agreement, some content cannot be shared.
 
 ## Project Summary
 This research discusses theoretical aspects of spam filtering, web structure, and internet communication. Comparing web forms and email data structure lays the fundament for creating a spam filer architecture. Popular machine learning techniques with classification functions, namely non-linear statistical models and tree-based learning techniques, are reviewed; and three machine learning methods: **Logistic Regression, Decision Tree, and Random Forest**, are chosen for fitting models. **Confusion matrix** and **cross-validation** to estimate the test errors of proposed models found that the Random Forest model has outperformed in classifying spam class and has the least test error rate. Insights generated through this research have provided recommendations for the future adjustment to the FormCheck spam filter.
 
-## Background
+# Background
 With the increasing usage of websites, web form has also become a new target for malware. Spammers often dump bulk messages that will blow up one’s inbox and steal data or harm websites by setting bugs or displaying harmful messages on a webpage. All the above would result in more problematic outcomes that can hurt a business's reputation, digital presence and finiacial lost.
 
-### FormCheck
+## FormCheck
 FormCheck, a rule-based spam filter system is designed for detecting spam web form. It utilizes a series of rules which includes: block list, IPs Addresses, domain providers, text categorization, and regular expression techniques to measure attributes and their properties.
 
-### Problem Statment
+## Problem Statment
 A rule-based mechanism is very robost to catpture spam message, but it can make the spam filter highly sensitive to suspicious message and missclassify legitimate message into spam class. In addtion, the rule-system is adjust manualy which is insufficient with the increasing volume of web form spam, and therefore, a more efficient way to analyze web form data is needed.
 
 ## Solution
 To address the above issues, applying data analysis to generate spam patterns and insights into current features is a prerequisite in the spam filter development process, then developing a classification model that can achieve high accuracy and low false positive rate. Lastly, essential features of the spam filter performance are provided, and recommendations are given accordingly.
+
+# Methods
 
 ## Data Source
 There are 60021 rows and 19 columns in the original dataset, the target variable `label`, is a binary data has two class `spam` and `ham`. The image below shows the spam and ham messages distribution in the original dataset. 
 
 <img width="427" alt="label" src="https://user-images.githubusercontent.com/72688726/187207906-2581e40c-750f-444c-81dd-04a7d547ba24.png">
 
-### Data Exploration and Modeling Process
+## Data Analysis
 This project aims at incorporating machine learning for the use in contact form spam detection, therefore, the data-driven research design is chosen. The data-driven research combines a ground-up method and a deductive approach. The research process includes preprocessing, feature engineering, and data analytics, and modeling. 
 
 ![workflow](https://user-images.githubusercontent.com/72688726/187202318-91422f62-d3da-4065-93b8-a109feea42ab.png)
 
-#### Transform rule-based model using feature engineering
+### Transform rule-based model using feature engineering
 In the original database, the column `Flags` stores several strings which are rules that are used for spam checking. As the rules are essential features when it comes to detecting spam, hence are transformed into binary data for data analysis. 
 
 To extract distinctive flags in each string, **Regular Expression** is applied, 64 flags (rules) are extracted and added as new columns. Feature engineering and one hot encode method are deployed by parsing each row of the data frame. itterow and `for-loop` were applied to iteratively match each row if it contains strings stored in flags; 1 refers to a flag existing in the column and 0 means a flag is absent. `pd.Series.split()` function is used to exact string in objects, and `len()` calculates the number of spam rules checked in each message.
 
-#### Header Analysis
+### Header Analysis
 As suggested by Bhowmick and Hazarika (2016), Sheu et al (2016), and Arras, Horn, Montavon, Muller, and Samel (2017), *header* information is an essential feature because it provides sender data that can effectively influence the performance of spam recognition. On the other hand, analyzing header is comparatively easy to implement compared to language process and text tokenization.
 
  - **Server protocol**: A server protocol with `HTTP/1.0` is not commonly used nowadays, and thus, it can be a critical indicator for spam detection. 
@@ -58,7 +60,7 @@ The header field `is_cookie` is empty and is very likely to be spam; one can con
  - 
 <img width="857" alt="flag_count" src="https://user-images.githubusercontent.com/72688726/187214227-c5958f8a-fb91-43c5-9260-fc4b5cf0833a.png">
 
-#### Behaviour Analysis 
+### Behaviour Analysis 
 To identify spam patterns, analysis of sender behavior is one of the spam detection techniques, *occurrence*, *past activity* and *user networks* for instance IP addresses can effectively capture spam messages. User-related features for instance name, phone, email, contact frequency are calculated and transformed into a percentage, which represents the occurrence of each observation.
 
 <img width="629" alt="form_box" src="https://user-images.githubusercontent.com/72688726/187214391-e6afcbd4-9b52-4be0-b33e-de4407882e8a.png">
@@ -71,7 +73,7 @@ According to the density graph, we found:
 
 <img width="719" alt="density" src="https://user-images.githubusercontent.com/72688726/187214280-267ee5e8-35a1-4115-94ed-9885a3afda6b.png">
 
-## Model Building & Evlauation
+# Modelling
 ![model building](https://user-images.githubusercontent.com/72688726/187214564-bf2be24e-28fc-4c9d-99f6-aac72049b318.png)
 
 A summary of Selected Classification Algorithms for the Research
@@ -83,12 +85,13 @@ A summary of Selected Classification Algorithms for the Research
 | Features Interpretation | p-value                                                  | Variables Importance                                | Variables Importance                              |
 | Measurement             | AIC, deviance and residual                               | Confusion matrix, precision, Recall, and F1 Score   | Confusion matrix, precision, recall, and F1 Score |
 
-### Feature Selection with Bourta
+## Feature Selection with Bourta
 When building a machine learning model, having too many features brings issues such as the curse of dimensionality, besides the need for more memory, processing time, and power. Features selection is deployed as it focuses on finding essential features that can be used for modifying the current spam filter system. In this case, Boruta is used (Miron, 2020). It is one of the feature selection methods capable of working with any classification method. It outputs variable importance and decision based on the Random Forest mechanism. In addition, it can work with both categorical and numeric predictors and hence can provide a better outcome than applying a correlation matrix.
 <img width="800" alt="Boruta" src="https://user-images.githubusercontent.com/72688726/187219980-049158da-6bf9-449d-b95e-9d988e08d8dc.png">
 
  - 72 variables appear with green color means those are the essential features to judge if a web form is spam or ham; while variables are colored in red means they do not have an influential impact on the decision process and therefore be dropped in fitting a logistic regression model
 
+## Fitting Models 
  - **Experiment 1: Logistic Regression, and use three Features Selection Methods**
   - Method 1: use p-value select features which are statistic significat for fitting model 
   - Metood 2: use `drop1` method to get the lowest AIC
@@ -113,12 +116,13 @@ T RF model has firstly fitted all predictors with default settings in `randomFor
 
 <img width="795" alt="rf_pruning" src="https://user-images.githubusercontent.com/72688726/187229346-7afa54d6-da5f-4314-833c-0e178ed63746.png">
 
-## Reslut
+# Reslut
 Confusion matrix, cross-validation, ROC, and AUC curves, are used to evaluate classifiers. The image below presents the performance of the FormCheck spam filter, Prediction refers to the value of the source column, and Target refers to the actual value of the label column.
 <img width="573" alt="Cofusion_matrix" src="https://user-images.githubusercontent.com/72688726/187224895-0a8825b4-e431-4637-aab9-1da98f715790.png">
 
 Three models: Logistic Regression, Decision Tree, and Radom Forest are evaluate with Accuracy, error rate, and false-positive rate.
-**Evaluation FormCheck and proposed classifiers performance**
+
+### Evaluation FormCheck and proposed classifiers performance**
 | Classifier    | Accuracy | Error Rate | FP rate | F1     |
 | ------------- | -------- | ---------- | ------- | ------ |
 | **FormCheck** | 0.9941   | 0.0059     | 0.0123  | 0.9040 |
@@ -147,7 +151,7 @@ In tree-based models the function `varImpPlot()` allow us to examine the importa
 
 Features used in the logistic regression are very different from the other two models, this would require further investigation and experiments to test with different combinations of variables. However, this approach allows us to confirm variables: server_protocol, is_cookies, accept_language, ACCEPT_LANG_NULL, flag_count, and MESSAGE_URLS are important for spam detection in this research.
 
-## Conclusion & Recommadation
+# Conclusion & Recommadation
 This research has shown an improvement in assessments such as acracy, error rate, and specificity with all proposed classifiers, which proves that a spam filter designed with a machine learning approach can achieve as good performance as a rule-based protocol and the spam classifier build with random forest model has the best performace amongest other classifiers. Nevertheless, as the evolution of spam detection techniques is changed from time to time, more advanced techniques or influential factors need to be considered. Three recommendations are provided as follows:
 
 ### Establish Data collection and processing strategies
