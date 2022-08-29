@@ -1,6 +1,7 @@
 # Form Check: Webform Spam Filter Development
 #### Developing a spam filter for detecting webform spam appled feature selection technique and classification models: Logistic Regestion, Decision Tree and Random Forest
 
+![mediocre-studio-1Gvog1VdtDA-unsplash](https://user-images.githubusercontent.com/72688726/187232061-26b99efe-2e5b-4cd3-a354-385624b1ed06.jpg)
 Photo by [Mediocre Studio](https://unsplash.com/@paucasals?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/spam?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
 
 Master Thesis is submitted as part of the module for MSc in Applied Information and Data Science at School of Business, Lucerne University of Applied Science and Art. Due to the no disclose agreement, some content cannot be shared.
