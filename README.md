@@ -24,9 +24,7 @@ There are 60021 rows and 19 columns in the original dataset, the target variable
 
 ### Data Exploration and Modeling Process
 This project aims at incorporating machine learning for the use in contact form spam detection, therefore, the data-driven research design is chosen. The data-driven research combines a ground-up method and a deductive approach. The research process includes preprocessing, feature engineering, and data analytics, and modeling. 
-
 ![workflow](https://user-images.githubusercontent.com/72688726/187202318-91422f62-d3da-4065-93b8-a109feea42ab.png)
-![model_building](https://user-images.githubusercontent.com/72688726/187202356-a386df3e-ce83-426f-afec-ee4ea8d6c8fc.jpg)
 
 #### Transform rule-based model using feature engineering
 In the original database, the column `Flags` stores several strings which are rules that are used for spam checking. As the rules are essential features when it comes to detecting spam, hence are transformed into binary data for data analysis. 
@@ -50,17 +48,31 @@ The header field `is_cookie` is empty and is very likely to be spam; one can con
 <img width="694" alt="cookies" src="https://user-images.githubusercontent.com/72688726/187211768-aea7deb9-1226-4b55-8720-b3200506c63e.png">
 
  - **Flag_count**: flag_count refers to the number of spam checks that have been applied in an observation. As seen in the graph below, the histogram on the left shows that the number of flag counts ranges from 4 to 14; in contracts, the number of flag counts in spam messages is 23 widespread from 3 to 25. More, the boxplot on the right indicates the quantile distribution of flag_count. It is visible that once a web form is checked with more than 14 rules, it is more likely to be spam. Therefore flag_count can be a good indicator for detecting spam forms.
-<img width="480" alt="flag_count" src="https://user-images.githubusercontent.com/72688726/187213445-0a52a5e2-509c-4d80-bcd8-5bd8801a10ab.png">
+<img width="857" alt="flag_count" src="https://user-images.githubusercontent.com/72688726/187214227-c5958f8a-fb91-43c5-9260-fc4b5cf0833a.png">
 
 #### Behaviour Analysis 
 To identify spam patterns, analysis of sender behavior is one of the spam detection techniques, *occurrence*, *past activity* and *user networks* for instance IP addresses can effectively capture spam messages. User-related features for instance name, phone, email, contact frequency are calculated and transformed into a percentage, which represents the occurrence of each observation. 
+<img width="629" alt="form_box" src="https://user-images.githubusercontent.com/72688726/187214391-e6afcbd4-9b52-4be0-b33e-de4407882e8a.png">
 
 According to the density graph, we found:
 1. The number of flags applied to spam messages is varied from 0 up to 25. 
 2. The spammer is active throughout the day, whereas legitimate users are more active from 7 am to 8 pm. 
 3. The activities of spammers are spread out in each category, which means some repeated users are found in the spam web form. For instance, the occurrence of the name, domain name and hostname tend to be high compared to legitimate users
 4. In contrast, regular users show a few repeatation accross all activties features, which means the legitimate user may use only one or twice contact forms to reach out web host, and spammers are more likely to continue sending junk messages.
-<img width="452" alt="user_pattern" src="https://user-images.githubusercontent.com/72688726/187209271-0e474caa-0bbd-4967-9f81-4c68018820d6.png">
+<img width="719" alt="density" src="https://user-images.githubusercontent.com/72688726/187214280-267ee5e8-35a1-4115-94ed-9885a3afda6b.png">
+
+## Model Building & Evlauation
+![model building](https://user-images.githubusercontent.com/72688726/187214564-bf2be24e-28fc-4c9d-99f6-aac72049b318.png)
+
+A summary of Selected Classification Algorithms for the Research
+| Algorithm               | Logistic Regression                                      | Decision Tree                                       | Random Forest                                     |
+| ----------------------- | -------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------- |
+| Method                  | A combination of linear regression with a logit function | An algorithm taking recursive partitioning learning | An assembled algorithm based on  Decision Tree    |
+| Type                    | Statistic Model                                          | Machine Learning Model                              | Machine Learning Model                            |
+| Results                 | Probability of occurrence of an event                    | Output important features and association rules     | Decision is made with majority Votes              |
+| Features Interpretation | p-value                                                  | Variables Importance                                | Variables Importance                              |
+| Measurement             | AIC, deviance and residual                               | Confusion matrix, precision, Recall, and F1 Score   | Confusion matrix, precision, recall, and F1 Score |
+
 
 ## Conclusion & Recommadation
 This research has shown an improvement in assessments such as acracy, error rate, and specificity with all proposed classifiers, which proves that a spam filter designed with a machine learning approach can achieve as good performance as a rule-based protocol. Nevertheless, as the evolution of spam detection techniques is changed from time to time, more advanced techniques or influential factors need to be considered. Three recommendations are provided as follows:
