@@ -13,7 +13,7 @@ Master Thesis is submitted as part of the module for MSc in Applied Information 
 This research discusses theoretical aspects of spam filtering, web structure, and internet communication. Comparing web forms and email data structure lays the fundament for creating a spam filter architecture. Popular machine learning techniques with classification functions, namely non-linear statistical models and tree-based learning techniques, are reviewed; and three machine learning methods: **Logistic Regression, Decision Tree, and Random Forest**, are chosen for fitting models. **Confusion matrix** and **cross-validation** are deployed to estimate the test errors of proposed models. The result shows the Random Forest model has outperformed in classifying spam classes and has **achieved 99% accuracy with the least test error rate of 0.1%**. Insights generated through this research have provided recommendations for future adjustments to the FormCheck spam filter.
 
 # Table of Content
- - [Background]()
+ - [Background](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#background)
  - [Problem & Solution]()
  - [Project Goal]()
  - [Data Source]()
