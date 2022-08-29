@@ -73,6 +73,66 @@ A summary of Selected Classification Algorithms for the Research
 | Features Interpretation | p-value                                                  | Variables Importance                                | Variables Importance                              |
 | Measurement             | AIC, deviance and residual                               | Confusion matrix, precision, Recall, and F1 Score   | Confusion matrix, precision, recall, and F1 Score |
 
+### Feature Selection with Bourta
+When building a machine learning model, having too many features brings issues such as the curse of dimensionality, besides the need for more memory, processing time, and power. Features selection is deployed as it focuses on finding essential features that can be used for modifying the current spam filter system. In this case, Boruta is used (Miron, 2020). It is one of the feature selection methods capable of working with any classification method. It outputs variable importance and decision based on the Random Forest mechanism. In addition, it can work with both categorical and numeric predictors and hence can provide a better outcome than applying a correlation matrix.
+<img width="800" alt="Boruta" src="https://user-images.githubusercontent.com/72688726/187219980-049158da-6bf9-449d-b95e-9d988e08d8dc.png">
+
+ - 72 variables appear with green color means those are the essential features to judge if a web form is spam or ham; while variables are colored in red means they do not have an influential impact on the decision process and therefore be dropped in fitting a logistic regression model
+
+ - Experiment 1: Logistic Regression, and use three Features Selection Methods
+  - Method 1: use p-value select features which are statistic significat for fitting model 
+  - Metood 2: use `drop1` method to get the lowest AIC
+  - Metood 3: use `Boruta` to select important features
+
+The Table below compares three methods with a full model `Logit.all`
+
+| Model | Logit.all | Logit.82 | Logit.73 | Logit.b72 |
+| ----- | --------- | -------- | -------- | --------- |
+| AIC   | 6739.945  | 6007.072 | 5268.2   | 5268.2    |
+
+AIC is used to select a logistic model, as the less features the better due to modeling efficeincy, hence, `Logit.b72` is selected to compete with tree-based models
+
+ - Experiment 2: Decision Tree
+Classification tree `tree()`, `rpart()` and condition interference tree `ctree()` 
+The value of the complexity parameter (CP) is identified and the lowest cross-validation error.
+An optimal decision tree created by using the values generated above. In this model, predictors namely server_protocol, MESSAGE_URL_SPAM, accept_language, is_cookies, and IP_REPUTATION are used as the terminal notes for decision making.
+<img width="771" alt="pruning_tree" src="https://user-images.githubusercontent.com/72688726/187228602-c57f09e9-c93b-42f0-a141-e998575ea2bb.png">
+
+ - Experiment 3: Random Forest
+T RF model has firstly fitted all predictors with default settings in `randomForest()` package. To improve the false positive rate, pruning tree is critical in building tree models. A significant drop is observed when growing 100 trees. However, the error rate becomes less visible and cannot be improved after using 300 trees. `tuneRF` and parameter `mtry` are used for tuning tree.
+
+<img width="795" alt="rf_pruning" src="https://user-images.githubusercontent.com/72688726/187229346-7afa54d6-da5f-4314-833c-0e178ed63746.png">
+
+
+<img width="573" alt="Cofusion_matrix" src="https://user-images.githubusercontent.com/72688726/187224895-0a8825b4-e431-4637-aab9-1da98f715790.png">
+
+**Evaluation FormCheck and proposed classifiers performance**
+| Classifier    | Accuracy | Error Rate | FP rate | F1     |
+| ------------- | -------- | ---------- | ------- | ------ |
+| **FormCheck** | 0.9941   | 0.0059     | 0.0123  | 0.9040 |
+| `logit.b72`   | 0.9985   | 0.0015     | 0.0325  | 0.9992 |
+| `tree`        | 0.9974   | 0.0026     | 0.0195  | 0.9988 |
+| `rforest`     | 0.9999   | 0.0010     | 0.0162  | 0.9995 |
+
+<img width="1010" alt="cv-test" src="https://user-images.githubusercontent.com/72688726/187224342-4c9298dd-5320-4570-a02d-a77ad954a97d.png">
+Three classifiers were run on the training dataset testing dataset to achieve reliable results, efficiency, and accuracy of training data were accessed by applying 10-fold cross-validation
+
+#### Identify Important Features for Spam Filtering
+In tree-based models the function `varImpPlot()` allow us to examine the important features of the proposed models with graphical output. Variable importance measures the contribution of each variable by assessing the mean decrease accuracy. The lower the value, the less critical toward a model; the mean decreased Gini measures the purity of the end nodes of branches in a model, the lower the Gini value, the better the feature can impact the decision.
+<img width="661" alt="variable_importance" src="https://user-images.githubusercontent.com/72688726/187223129-f346f58a-34d3-4f91-ad39-8c3715394142.png">
+
+
+**The Result of Variable Importance Measure of Proposed Models**
+| Logistic Regression | Decision Tree    | Random Forest    |
+| ------------------- | ---------------- | ---------------- |
+| is_name             | accept_language  | server_protocol  |
+| name_perc           | flag_count       | is_cookies       |
+| SENDER_DOMAIN_NO_MX | ACCEPT_LANG_NULL | flag_count       |
+| DOMAIN_PERIC        | server_protocal  | ACCEPT_LANG_NULL |
+| MESSAGE_URL_LINKS   | is_cookies       | MESSAGE_URLS     |
+
+
+Features used in the logistic regression are very different from the other two models, this would require further investigation and experiments to test with different combinations of variables. However, this approach allows us to confirm variables: server_protocol, is_cookies, accept_language, ACCEPT_LANG_NULL, flag_count, and MESSAGE_URLS are important for spam detection in this research.
 
 ## Conclusion & Recommadation
 This research has shown an improvement in assessments such as acracy, error rate, and specificity with all proposed classifiers, which proves that a spam filter designed with a machine learning approach can achieve as good performance as a rule-based protocol. Nevertheless, as the evolution of spam detection techniques is changed from time to time, more advanced techniques or influential factors need to be considered. Three recommendations are provided as follows:
