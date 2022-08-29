@@ -11,11 +11,11 @@ In the research process, data preprocessing, data exploration and features engin
 With the increasing usage of websites, web form has also become a new target for malware. Most spammers would not only send one or two messages; they often dump bulk messages that will blow up one’s inbox and decrease work efficiency. In addition, attackers try to steal data stored on the server, sending spam to disrupt businesses and users. The growing number of spam can result in several issues. To handle bulk messages, web owners might need additional storage to house all submission, it is very costly and wastes resources. In addition, the offenders will not just want to blow up mailboxes; they crawl web pages with the intent to steal data or harm websites by setting bugs or displaying harmful messages on a webpage. All the above would result in more problematic outcomes that can hurt a business's reputation and digital presence.
 
 ### FormCheck
-
 FormCheck, a spam filtering system, is particularly used to detect unsolicited electronic messages sent through contact forms on web browsers. The spam filter is designed based on a rule-based system, it utilizes a series of rules which includes: block list, IPs Addresses, domain providers, text categorization, and regular expression techniques to measure attributes and their properties.
 
 ### Problem Statment
 When exploring the web form data, we found the data is highly skewed, in which the number of spam webforms accounts for more than 90% of the dataset; this is because the classification task is done based on a rule-based mechanism that makes the spam filter highly sensitive to suspicious messages. On the other hand, with an increasing volume of web form spam, a more efficient way to analyze web form data is needed.
+<img width="427" alt="label" src="https://user-images.githubusercontent.com/72688726/187201956-f054f4d5-a293-42a8-a9ba-ce2647c6e078.png">
 
 ## Solution
 To address the above issues, applying data analysis to generate spam patterns and insights into current features is a prerequisite in the spam filter development process, then developing a classification model that can achieve high accuracy and low false positive rate. Lastly, essential features of the spam filter performance are provided, and recommendations are given accordingly.
@@ -25,11 +25,14 @@ There are 60021 rows and 19 columns in the original dataset, the target variable
 
 ### Data Exploration and Modeling Process
 This project aims at incorporating machine learning for the use in contact form spam detection, therefore, the data-driven research design is chosen. The data-driven research combines a ground-up method and a deductive approach. The research process includes preprocessing, feature engineering, and data analytics, and modeling. 
+![workflow](https://user-images.githubusercontent.com/72688726/187202318-91422f62-d3da-4065-93b8-a109feea42ab.png)
+![model_building](https://user-images.githubusercontent.com/72688726/187202356-a386df3e-ce83-426f-afec-ee4ea8d6c8fc.jpg)
 
 #### Transform rule-based model using feature engineering
 In the original database, the column `Flags` stores several strings which are rules that are used for spam checking. As the rules are essential features when it comes to detecting spam, hence are transformed into binary data for data analysis. 
 
 To extract distinctive flags in each string, **Regular Expression** is applied, 64 flags (rules) are extracted and added as new columns. Feature engineering and one hot encode method are deployed by parsing each row of the data frame. itterow and `for-loop` were applied to iteratively match each row if it contains strings stored in flags; 1 refers to a flag existing in the column and 0 means a flag is absent. `pd.Series.split()` function is used to exact string in objects, and `len()` calculates the number of spam rules checked in each message.
+<img width="421" alt="flag_category_2" src="https://user-images.githubusercontent.com/72688726/187202121-d50fa4d0-667e-4f41-b081-f2e7a6eaf3b1.png">
 
 #### Header Analysis
 As suggested by Bhowmick and Hazarika (2016), Sheu et al (2016), and Arras, Horn, Montavon, Muller, and Samel (2017), *header* information is an essential feature because it provides sender data that can effectively influence the performance of spam recognition. On the other hand, analyzing header is comparatively easy to implement compared to language process and text tokenization.
