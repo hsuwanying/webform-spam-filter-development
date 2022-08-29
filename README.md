@@ -123,7 +123,7 @@ Confusion matrix, cross-validation, ROC, and AUC curves, are used to evaluate cl
 
 Three models: Logistic Regression, Decision Tree, and Radom Forest are evaluate with Accuracy, error rate, and false-positive rate.
 
-### Evaluation FormCheck and proposed classifiers performance**
+**Evaluation FormCheck and proposed classifiers performance**
 | Classifier    | Accuracy | Error Rate | FP rate | F1     |
 | ------------- | -------- | ---------- | ------- | ------ |
 | **FormCheck** | 0.9941   | 0.0059     | 0.0123  | 0.9040 |
