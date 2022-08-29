@@ -155,13 +155,13 @@ Features used in the logistic regression are very different from the other two m
 # Conclusion & Recommadation
 This research has shown an improvement in assessments such as acracy, error rate, and specificity with all proposed classifiers, which proves that a spam filter designed with a machine learning approach can achieve as good performance as a rule-based protocol and the spam classifier build with random forest model has the best performace amongest other classifiers. Nevertheless, as the evolution of spam detection techniques is changed from time to time, more advanced techniques or influential factors need to be considered. Three recommendations are provided as follows:
 
-### Establish Data collection and processing strategies
+ - Establish Data collection and processing strategies
 Through the research process, features extracted from the header fields play significant roles that impact on spam recognition process, which echoes the findings from previous research and study. Hence, having clear guidance and data collection strategies is essential to improve data quality and improve the spam filter system.
 
-### Important Features and rules adjustment.
-New features, namely server_protocol, is_cookies, accept_language, ACCEPT_LANG_NULL, flag_count, and MESSAGE_URLS are frequently appear when modeling decision trees and random forests and thus suggest adding to the existing rule-based system. However, these new features need to be compared with the existing rules to make sure no overlapping exists in the current system; on the other hand, duplicated attributes, for instance: message repeat words and message repeated texts, one should be dropped because both data is overlaid and will create additional weight on its scoring system.
+ - Important Features and rules adjustment.
+New features, namely `server_protocol`, `is_cookies`, `accept_language`, `ACCEPT_LANG_NULL`, `flag_count`, and `MESSAGE_URLS` are frequently appear when modeling decision trees and random forests and thus suggest adding to the existing rule-based system. However, these new features need to be compared with the existing rules to make sure no overlapping exists in the current system; on the other hand, duplicated attributes, for instance: message repeat words and message repeated texts, one should be dropped because both data is overlaid and will create additional weight on its scoring system.
 
-### Apply alternative machine learning methods for handling multi-class tasks
+ - Apply alternative machine learning methods for handling multi-class tasks
 In the original data, a third class is identified during the labeling stage; those web forms have similar functions such as signing up for the newsletter, catalog requests, and user registration; in addition, these types of web forms have identical or similar contents in the body text area, which makes the labeling process challenging to judge without comparing external data. Although the end goal of the spam filter is to output binary values, a machine that can determine an uncertain message would help reduce the negative impact of labeling a legitimate user as a spammer. Therefore, machine learning methods such as deep learning or recursive learning techniques would be ideal for handling multi-class tasks.
 
 # Project Reflection
