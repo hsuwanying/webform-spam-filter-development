@@ -41,11 +41,11 @@ As suggested by Bhowmick and Hazarika (2016), Sheu et al (2016), and Arras, Horn
 #### Behaviour Analysis 
 To identify spam patterns, analysis of sender behavior is one of the spam detection techniques, *occurrence*, *past activity* and *user networks* for instance IP addresses can effectively capture spam messages. User-related features for instance name, phone, email, contact frequency are calculated and transformed into a percentage, which represents the occurrence of each observation. 
 
+
 We found normal user will contact businesese in an avarge 1 - 5 times use the contact form searvice; while spammers would have more frequent, and repeate interatction with the contacform and therefore, contact frequcey can be a good indicator for building our model.
+<img width="629" alt="form_box" src="https://user-images.githubusercontent.com/72688726/187201707-0c1f4b79-e577-41b1-bc94-bd896dfa1956.png">
 
 ### Model Selection & Fitting Model
-
-<img src="/Users/hsuwanying/Documents/IDS2020_2022/4th_semester/Master_thesis/EDA/confusion_matrix_current.png" alt="confusion_matrix_current" style="zoom:50%;" />
 
 
 ## Conclusion & Recommadation
