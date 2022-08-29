@@ -49,20 +49,18 @@ As suggested by Bhowmick and Hazarika (2016), Sheu et al (2016), and Arras, Horn
 The header field `is_cookie` is empty and is very likely to be spam; one can confirm that near 100 % of `is_cookie = 0` is spam which can be used to separate forms. The below image shows the number of web forms in each class and the corresponding is_cookie value.
 <img width="694" alt="cookies" src="https://user-images.githubusercontent.com/72688726/187211768-aea7deb9-1226-4b55-8720-b3200506c63e.png">
 
+ - **Flag_count**: flag_count refers to the number of spam checks that have been applied in an observation. As seen in the graph below, the histogram on the left shows that the number of flag counts ranges from 4 to 14; in contracts, the number of flag counts in spam messages is 23 widespread from 3 to 25. More, the boxplot on the right indicates the quantile distribution of flag_count. It is visible that once a web form is checked with more than 14 rules, it is more likely to be spam. Therefore flag_count can be a good indicator for detecting spam forms.
+<img width="480" alt="flag_count" src="https://user-images.githubusercontent.com/72688726/187213445-0a52a5e2-509c-4d80-bcd8-5bd8801a10ab.png">
 
 #### Behaviour Analysis 
 To identify spam patterns, analysis of sender behavior is one of the spam detection techniques, *occurrence*, *past activity* and *user networks* for instance IP addresses can effectively capture spam messages. User-related features for instance name, phone, email, contact frequency are calculated and transformed into a percentage, which represents the occurrence of each observation. 
 
-<img width="640" alt="form_hist" src="https://user-images.githubusercontent.com/72688726/187207629-4922d906-8a4a-4fe3-92c4-42384cad9294.png">
-<img width="629" alt="form_box" src="https://user-images.githubusercontent.com/72688726/187201707-0c1f4b79-e577-41b1-bc94-bd896dfa1956.png">
-
-
-<img width="452" alt="user_pattern" src="https://user-images.githubusercontent.com/72688726/187209271-0e474caa-0bbd-4967-9f81-4c68018820d6.png">
 According to the density graph, we found:
 1. The number of flags applied to spam messages is varied from 0 up to 25. 
 2. The spammer is active throughout the day, whereas legitimate users are more active from 7 am to 8 pm. 
 3. The activities of spammers are spread out in each category, which means some repeated users are found in the spam web form. For instance, the occurrence of the name, domain name and hostname tend to be high compared to legitimate users
 4. In contrast, regular users show a few repeatation accross all activties features, which means the legitimate user may use only one or twice contact forms to reach out web host, and spammers are more likely to continue sending junk messages.
+<img width="452" alt="user_pattern" src="https://user-images.githubusercontent.com/72688726/187209271-0e474caa-0bbd-4967-9f81-4c68018820d6.png">
 
 ## Conclusion & Recommadation
 This research has shown an improvement in assessments such as acracy, error rate, and specificity with all proposed classifiers, which proves that a spam filter designed with a machine learning approach can achieve as good performance as a rule-based protocol. Nevertheless, as the evolution of spam detection techniques is changed from time to time, more advanced techniques or influential factors need to be considered. Three recommendations are provided as follows:
