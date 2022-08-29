@@ -23,10 +23,12 @@ To address the above issues, applying data analysis to generate spam patterns an
 
 ## Data Source
 There are 60021 rows and 19 columns in the original dataset, the target variable `label`, is a binary data has two class `spam` and `ham`. The image below shows the spam and ham messages distribution in the original dataset. 
+
 <img width="427" alt="label" src="https://user-images.githubusercontent.com/72688726/187207906-2581e40c-750f-444c-81dd-04a7d547ba24.png">
 
 ### Data Exploration and Modeling Process
 This project aims at incorporating machine learning for the use in contact form spam detection, therefore, the data-driven research design is chosen. The data-driven research combines a ground-up method and a deductive approach. The research process includes preprocessing, feature engineering, and data analytics, and modeling. 
+
 ![workflow](https://user-images.githubusercontent.com/72688726/187202318-91422f62-d3da-4065-93b8-a109feea42ab.png)
 
 #### Transform rule-based model using feature engineering
@@ -44,17 +46,21 @@ As suggested by Bhowmick and Hazarika (2016), Sheu et al (2016), and Arras, Horn
 
  - **Accept Language**: Referes to the broswer language is used by the user. In many cases, this field is not exist in the header in spam messages.
  a`ccept_language = 0` means this field does not exist in metadata and is 100% likely to be spam; this can be a good indicator for detecting spam web forms. In contrast, if `accept_language = 1` exists in the metadata, it is 59% likely to be spam and 41% ha. The image below shows the number of web forms in each class and the corresponding accept_language value.
+ 
  <img width="681" alt="acceptlanguage" src="https://user-images.githubusercontent.com/72688726/187211758-3e78835a-ced8-4944-a084-476c50381367.png">
  
  - **Cookies**: Request header contains stored HTTP cookies, this field can be found in majority legitimae message
 The header field `is_cookie` is empty and is very likely to be spam; one can confirm that near 100 % of `is_cookie = 0` is spam which can be used to separate forms. The below image shows the number of web forms in each class and the corresponding is_cookie value.
+
 <img width="694" alt="cookies" src="https://user-images.githubusercontent.com/72688726/187211768-aea7deb9-1226-4b55-8720-b3200506c63e.png">
 
  - **Flag_count**: flag_count refers to the number of spam checks that have been applied in an observation. As seen in the graph below, the histogram on the left shows that the number of flag counts ranges from 4 to 14; in contracts, the number of flag counts in spam messages is 23 widespread from 3 to 25. More, the boxplot on the right indicates the quantile distribution of flag_count. It is visible that once a web form is checked with more than 14 rules, it is more likely to be spam. Therefore flag_count can be a good indicator for detecting spam forms.
+ - 
 <img width="857" alt="flag_count" src="https://user-images.githubusercontent.com/72688726/187214227-c5958f8a-fb91-43c5-9260-fc4b5cf0833a.png">
 
 #### Behaviour Analysis 
-To identify spam patterns, analysis of sender behavior is one of the spam detection techniques, *occurrence*, *past activity* and *user networks* for instance IP addresses can effectively capture spam messages. User-related features for instance name, phone, email, contact frequency are calculated and transformed into a percentage, which represents the occurrence of each observation. 
+To identify spam patterns, analysis of sender behavior is one of the spam detection techniques, *occurrence*, *past activity* and *user networks* for instance IP addresses can effectively capture spam messages. User-related features for instance name, phone, email, contact frequency are calculated and transformed into a percentage, which represents the occurrence of each observation.
+
 <img width="629" alt="form_box" src="https://user-images.githubusercontent.com/72688726/187214391-e6afcbd4-9b52-4be0-b33e-de4407882e8a.png">
 
 According to the density graph, we found:
@@ -62,6 +68,7 @@ According to the density graph, we found:
 2. The spammer is active throughout the day, whereas legitimate users are more active from 7 am to 8 pm. 
 3. The activities of spammers are spread out in each category, which means some repeated users are found in the spam web form. For instance, the occurrence of the name, domain name and hostname tend to be high compared to legitimate users
 4. In contrast, regular users show a few repeatation accross all activties features, which means the legitimate user may use only one or twice contact forms to reach out web host, and spammers are more likely to continue sending junk messages.
+
 <img width="719" alt="density" src="https://user-images.githubusercontent.com/72688726/187214280-267ee5e8-35a1-4115-94ed-9885a3afda6b.png">
 
 ## Model Building & Evlauation
