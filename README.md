@@ -33,7 +33,7 @@ With the increasing usage of websites, web form has also become a new target for
 Webform Spam Filter, a rule-based spam filter system, is designed for detecting spam web forms. It utilizes a series of rules which includes: block list, IPs Addresses, domain providers, text categorization, and regular expression techniques to measure attributes and their properties.
 
 # Business Problem
-A rule-based spam filter is commonly used in spam development due to its robust mechanism and outstanding performance detecting spam messages. Nevertheless, it can make the spam filter highly sensitive to suspicious messages and misclassify legitimate ones into a spam class. In addition, as a rule, it is set by humans and therefore needs to be manually adjusted, which is insufficient. With the increasing volume of web form spam, a more efficient way to analyze web form data is required.
+A rule-based spam filter is commonly used in spam development due to its robust mechanism and outstanding performance detecting spam messages, as the rules are set by humans, it can make the machine very sensitive to suspicious messages and misclassify legitimate ones into a spam class. In addtion, the predefine rules need to be adjusted manually, which is insufficien with the increasing volume of web form spam, therefore, a more efficient way to classify web form data is required.
 
 # Solution
 To address the above issues, applying data analysis to generate spam patterns and insights into current features is a prerequisite in the spam filter development process, then developing a classification model that can achieve high accuracy and low false positive rate. Lastly, essential features of the spam filter performance are provided, and recommendations are given accordingly.
@@ -110,7 +110,7 @@ According to the density graph, we found:
 </p>
 
 ## Model Building
-A summary of Selected Classification Algorithms for the Research
+**The table below summarised the selected classification algorithms for this research.** 
 
 | Algorithm               | Logistic Regression                                      | Decision Tree                                       | Random Forest                                     |
 | ----------------------- | -------------------------------------------------------- | --------------------------------------------------- | ------------------------------------------------- |
@@ -121,17 +121,19 @@ A summary of Selected Classification Algorithms for the Research
 | Measurement             | AIC, deviance and residual                               | Confusion matrix, precision, Recall, and F1 Score   | Confusion matrix, precision, recall, and F1 Score |
 
 ## Feature Selection with Bourta
+When building a machine learning model, having too many features brings issues such as the curse of dimensionality, besides the need for more memory, processing time, and power. In this case, Boruta (Miron, 2020) is applied as it can work with both categorical and numeric predictors and provide a better outcome than applying a correlation matrix, and it can be supplemetary method to select important features for fitting logistic regression model, 
 
 <p align ="center">
  <img width="700" alt="Boruta" src="https://user-images.githubusercontent.com/72688726/187219980-049158da-6bf9-449d-b95e-9d988e08d8dc.png">
  </p><p align = "center"> Feature Selection: Boruta
 </p>
+
 ## Fitting Models 
 
  - **Experiment 1: Logistic Regression, and use three Features Selection Methods**
-  - Method 1: use p-value select features which are statistic significant for fitting model 
-  - Method 2: use the `drop1` method to get the lowest AIC
-  - Method 3: use `Boruta` to select essential features
+  - Method 1: use p-value select features which are statistic significant for fitting model `Logit.82`
+  - Method 2: use the `drop1` method to get the lowest AIC `Logit.73`
+  - Method 3: use `Boruta` selected features to fit a logistic regression model `Logit.b72`
 
 The Table below compares three methods with a complete model `Logit.all`
  
@@ -168,9 +170,10 @@ Confusion matrix, cross-validation, ROC, and AUC curves, are used to evaluate cl
  </p><p align = "center"> Confusion Matrix
 </p>
 
+# Result
 Three models: Logistic Regression, Decision Tree, and Radom Forest, are evaluated with Accuracy, error rate, and false-positive rate.
 
-**Evaluation FormCheck and proposed classifiers' performance**
+## Evaluation FormCheck and proposed classifiers' performance**
 
 | Classifier    | Accuracy | Error Rate | FP rate | F1     |
 | ------------- | -------- | ---------- | ------- | ------ |
@@ -179,7 +182,6 @@ Three models: Logistic Regression, Decision Tree, and Radom Forest, are evaluate
 | `tree`        | 0.9974   | 0.0026     | 0.0195  | 0.9988 |
 | `rforest`     | 0.9999   | 0.0010     | 0.0162  | 0.9995 |
 
-
 This research aims to find a model that maximizes the predictive performance of classifying spam web forms. Data were split into training and testing sets for model fitting and were accessed by applying 10-fold cross-validation.
 
 <p align ="center">
@@ -187,7 +189,7 @@ This research aims to find a model that maximizes the predictive performance of 
  </p><p align = "center"> Cross Validation
 </p>
 
-#### Identify Important Features for Spam Filtering
+### Identify Important Features for Spam Filtering
 
 In tree-based models, the function `varImpPlot()` allows us to examine the essential features of the proposed models with graphical output. Variable importance measures the contribution of each variable by assessing the mean decrease in accuracy. The lower the value, the less critical toward a model; the mean decreased Gini measures the purity of the end nodes of branches in a model; the lower the Gini value, the better the feature can impact the decision.
 
@@ -196,7 +198,7 @@ In tree-based models, the function `varImpPlot()` allows us to examine the essen
  </p><p align = "center"> Variable Importance
 </p>
 
-**The result of the Variable Importance Measure of Proposed Models**
+### The result of the Variable Importance Measure of Proposed Models
 
 | Logistic Regression | Decision Tree    | Random Forest    |
 | ------------------- | ---------------- | ---------------- |
