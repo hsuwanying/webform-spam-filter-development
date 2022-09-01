@@ -11,7 +11,7 @@
 <br>
 Master Thesis is submitted as part of the MSc in Applied Information and Data Science module at the School of Business, Lucerne University of Applied Science and Art.
 
-# Suponsor
+# Master Thesis Sponsor
  - [MarketVision AG](https://marketvision.ch)
 
 # Author
