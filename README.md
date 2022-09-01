@@ -40,12 +40,14 @@ To address the above issues, applying data analysis to generate spam patterns an
 
 # Methods
 - Data Prepareration: Clean data for data analysis
-- Feature Engeneering: Generate new features based on theortical background and previous research
+- Feature Engeneering: 
+  - Generate new features based on theortical background and previous research
+  - Transform 64 Rule-Based feautres into 64 binary variables 
 - Data Analysis: 
- - Apply statistc, mathmatical calcuation in **SQL** 
- - Graphical analysis (**Python** & **R**) to check data distribution, and finding meaningful features for modelling
+  - Apply statistc, mathmatical calcuation in **SQL** 
+  - Graphical analysis (**Python** & **R**) to check data distribution, and finding meaningful features for modelling
 - Building Classifier: Fitting **Logistic Regression**, **Classification Tree**, and **Randon Forest** models use **R**
-- Evaluation: Aplly **Confusion Matrix**, **Cross-Validation**, **ROC**, **AUC curve** to asscess classifiers
+- Evaluation: Use **Confusion Matrix**, **Cross-Validation**, **ROC**, **AUROC curve** to asscess classifiers
 
 There are 60021 rows and 19 columns in the original dataset, and the target variable `label` is binary data with two classes, `spam,` and `ham`. The image below shows the spam and ham messages distribution in the original dataset. 
 
@@ -130,10 +132,11 @@ When building a machine learning model, having too many features brings issues s
 
 ## Fitting Models 
 
- - **Experiment 1: Logistic Regression, and use three Features Selection Methods**
-  - Method 1: use p-value select features which are statistic significant for fitting model `Logit.82`
-  - Method 2: use the `drop1` method to get the lowest AIC `Logit.73`
-  - Method 3: use `Boruta` selected features to fit a logistic regression model `Logit.b72`
+- **Experiment 1: Logistic Regression, and use three Features Selection Methods**
+  - Model 1 `Logit.all`: fitting a full model with all feautres
+  - Model 2 `Logit.82`: use p-value select features which are statistic significant for fitting model
+  - Model 3 `Logit.73`: use the `drop1` method to get the lowest AIC
+  - Model 4``Logit.b72`: use `Boruta` selected features to fit a logistic regression model
 
 The Table below compares three methods with a complete model `Logit.all`
  
@@ -142,29 +145,29 @@ The Table below compares three methods with a complete model `Logit.all`
 | ----- | --------- | -------- | -------- | --------- |
 | AIC   | 6739.945  | 6007.072 | 5268.2   | 5268.2    |
 
-
 AIC is used to select a logistic model, as the fewer features, the better due to modeling efficiency; hence, `Logit.b72` is chosen to compete with tree-based models
 
- - **Experiment 2: Decision Tree**
+
+- **Experiment 2: Decision Tree**
    Classification tree `tree()`, `rpart()` and condition interference tree `ctree()` 
    The complexity parameter (CP) value and the lowest cross-validation error are identified.
    An optimal decision tree is created by using the values generated above. In this model, predictors, namely server_protocol, MESSAGE_URL_SPAM, accept_language, is_cookies, and IP_REPUTATION, are used as terminal notes for decision-making.
-  
+   
 <p align ="center">
  <img width="700" alt="pruning_tree" src="https://user-images.githubusercontent.com/72688726/187228602-c57f09e9-c93b-42f0-a141-e998575ea2bb.png">
  </p><p align = "center"> Classification Tree Pruning
 </p>
 
- - **Experiment 3: Random Forest**
-   The RF model first fitted all predictors with default settings in the `randomForest()` package. To improve the false positive rate, pruning tree is critical in building tree models. A significant drop is observed when growing 100 trees. However, the error rate becomes less visible and cannot be improved after using 300 trees. `tuneRF` and parameter `entry` is used for tuning trees.
 
+- **Experiment 3: Random Forest**
+   The RF model first fitted all predictors with default settings in the `randomForest()` package. To improve the false positive rate, pruning tree is critical in building tree models. A significant drop is observed when growing 100 trees. However, the error rate becomes less visible and cannot be improved after using 300 trees. `tuneRF` and parameter `entry` is used for tuning trees.
 <p align ="center">
- <img width="700" alt="pruning_tree" src="https://user-images.githubusercontent.com/72688726/187228602-c57f09e9-c93b-42f0-a141-e998575ea2bb.png">
+ <img width="700" alt="rf_pruning" src="https://user-images.githubusercontent.com/72688726/187229346-7afa54d6-da5f-4314-833c-0e178ed63746.png">
  </p><p align = "center"> Randon Forest Pruning
 </p>
 
+<br>
 Confusion matrix, cross-validation, ROC, and AUC curves, are used to evaluate classifiers. The image below presents the performance of the FormCheck spam filter, Prediction refers to the value of the source column, and Target refers to the actual value of the label column.
-
 <p align ="center">
  <img width="700" alt="Cofusion_matrix" src="https://user-images.githubusercontent.com/72688726/187224895-0a8825b4-e431-4637-aab9-1da98f715790.png">
  </p><p align = "center"> Confusion Matrix
@@ -172,8 +175,7 @@ Confusion matrix, cross-validation, ROC, and AUC curves, are used to evaluate cl
 
 # Result
 Three models: Logistic Regression, Decision Tree, and Radom Forest, are evaluated with Accuracy, error rate, and false-positive rate.
-
-## Evaluation FormCheck and proposed classifiers' performance**
+## Evaluation FormCheck and proposed classifiers performance
 
 | Classifier    | Accuracy | Error Rate | FP rate | F1     |
 | ------------- | -------- | ---------- | ------- | ------ |
@@ -182,14 +184,14 @@ Three models: Logistic Regression, Decision Tree, and Radom Forest, are evaluate
 | `tree`        | 0.9974   | 0.0026     | 0.0195  | 0.9988 |
 | `rforest`     | 0.9999   | 0.0010     | 0.0162  | 0.9995 |
 
+<br>
 This research aims to find a model that maximizes the predictive performance of classifying spam web forms. Data were split into training and testing sets for model fitting and were accessed by applying 10-fold cross-validation.
-
 <p align ="center">
  <img width="700" alt="cv-test" src="https://user-images.githubusercontent.com/72688726/187224342-4c9298dd-5320-4570-a02d-a77ad954a97d.png">
  </p><p align = "center"> Cross Validation
 </p>
 
-### Identify Important Features for Spam Filtering
+### Identify mportant Features for Spam Filtering
 
 In tree-based models, the function `varImpPlot()` allows us to examine the essential features of the proposed models with graphical output. Variable importance measures the contribution of each variable by assessing the mean decrease in accuracy. The lower the value, the less critical toward a model; the mean decreased Gini measures the purity of the end nodes of branches in a model; the lower the Gini value, the better the feature can impact the decision.
 
@@ -198,7 +200,7 @@ In tree-based models, the function `varImpPlot()` allows us to examine the essen
  </p><p align = "center"> Variable Importance
 </p>
 
-### The result of the Variable Importance Measure of Proposed Models
+### The result of the `Variable Importance Measure` of proposed models
 
 | Logistic Regression | Decision Tree    | Random Forest    |
 | ------------------- | ---------------- | ---------------- |
