@@ -6,24 +6,28 @@
 </p>
 
 # Webform Spam Filter Development
-### Developing a spam filter for detecting web form spam applied  feature selection techniques and classification models
+### Apply feature selection techniques and classification models for developing a spam filter for detecting webform spam
 
 <br>
 Master Thesis is submitted as part of the MSc in Applied Information and Data Science module at the School of Business, Lucerne University of Applied Science and Art.
 
+# Suponsor
+ - [MarketVision AG](https://marketvision.ch)
+
 # Author
-[Carol Hsu](https://github.com/hsuwanying)
+ - [Carol Hsu](https://github.com/hsuwanying)
 
 # Summary
 This research discusses theoretical aspects of spam filtering, web structure, and internet communication. Comparing web forms and email data structure lays the fundament for creating a spam filter architecture. Popular machine learning techniques with classification functions, namely non-linear statistical models and tree-based learning techniques, are reviewed; and three machine learning methods: **Logistic Regression, Decision Tree, and Random Forest**, are chosen for fitting models. **Confusion matrix** and **cross-validation** are deployed to estimate the test errors of proposed models. The result shows the Random Forest model has outperformed in classifying spam classes and has **achieved 99% accuracy with the least test error rate of 0.1%**. Insights generated through this research have provided recommendations for future adjustments to the FormCheck spam filter.
 
 # Table of Content
- - [Background]
- - [Business Problem]
- - [Solution]
- - [Methods]
- - [Result]
- - [Conclustion & Recommadation]
+ - [Background](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#background)
+ - [Business Problem](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#business-problem)
+ - [Solution](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#solution)
+ - [Methods](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#methods)
+ - [Result](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#result)
+ - [Conclustion & Recommadation](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#Conclustion--Recommadation)
+ - [Project Refelction](https://github.com/hsuwanying/webform-spam-filter-development/blob/main/README.md#Project-Refelction)
  
  # Background
 With the increasing usage of websites, web form has also become a new target for malware. Spammers often dump bulk messages that will blow up one’s inbox, steal data, or harm websites by setting bugs or displaying harmful messages on a webpage. All the above would result in more problematic outcomes that can hurt a business's reputation, digital presence, and financial loss.
@@ -40,10 +44,11 @@ To address the above issues, applying data analysis to generate spam patterns an
 # Methods
 - Data Prepareration: Clean data for data analysis
 - Feature Engeneering: Generate new features based on theortical background and previous research
-- Data Analysis: Apply statistc, mathmatical calcuation and graphical analysis to check data distribution, and find meaningful features for modelling
-- Building Classifier: Fitting logistic regression, classification tree, and randon forest models 
-- Evaluation: Aplly Confusion Matrix, Cross-Validation, ROC, AUC curve to asscess classifiers
-
+- Data Analysis: 
+ - Apply statistc, mathmatical calcuation in **SQL** 
+ - Graphical analysis (**Python** & **R**) to check data distribution, and finding meaningful features for modelling
+- Building Classifier: Fitting **Logistic Regression**, **Classification Tree**, and **Randon Forest** models use **R**
+- Evaluation: Aplly **Confusion Matrix**, **Cross-Validation**, **ROC**, **AUC curve** to asscess classifiers
 
 There are 60021 rows and 19 columns in the original dataset, and the target variable `label` is binary data with two classes, `spam,` and `ham`. The image below shows the spam and ham messages distribution in the original dataset. 
 
