@@ -1,0 +1,582 @@
+---
+title: "model_building"
+author: "Wan Ying Hsu"
+date: "3/22/2022"
+output: word_document
+---
+#FormCheck - Spam Filtering Development using a Machine Learning Approach
+
+##Data Analysis and Problem Statement
+ - Problem: What are the influencing factors that predict web form submission is spam?
+ - target variables: label
+ - predict variables: 11 continuous variables (flag_count,msg_length, asn_perc, ip_perc, host_perc, domain_perc, name_perc, phone_perc,email_perc,hour, sub_length), 2 categorical variables, 79 binary variables
+ 
+## Data Analysis Proccess
+ 1. Load data and inspection
+ 2. Exploratory Data Analysis
+ 3. Data clearing and reprocessing
+ 4. Data Partition for training and testing
+ 5. Features selection
+ 6. Fit Models and prediction
+ 7. Model evaluation and comparison
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE,message=FALSE}}
+library(cvms) #cross-validation
+library(tibble)   
+library(DataExplorer) # data visualization
+library(dplyr)     # data manipulation
+library(tidyverse) # data manipulation
+library(rattle) 
+library(ROSE) #Random Over-Sampling Examples
+library(caret)   # Machine learning
+library(randomForest) # Random Forest
+library(rpart) # Decision Tree
+library(tree)
+library(Boruta) #features selection
+library(party) #features selection
+library(ggplot2) # Data Visualization
+library(rpart.plot) # Visualization Decision Tree
+library(ROCR) #ROC curve
+library(ggpubr)
+library(corrplot) 
+library(RColorBrewer)
+library(glmnet)
+```
+
+
+
+```{r}
+form<-form %>%
+  mutate(label = as.factor(label),
+         language = as.factor(language),
+         server_protocol= as.factor(server_protocol),
+         source = as.factor(source))
+
+
+form <- within(form, {
+ language <- 0
+ language[language %in% c("cs","de","el","en","es","fr","gs","he","hr","hu","id","it","lv","my","nl","pl","pt","tr")] <- 1
+})
+form$language <- as.integer(form$language)
+
+form$server_protocol <- recode(form$server_protocol, 'HTTP/1.0' = "HTTP10", 'HTTP/1.1' = "HTTP11", 'HTTP/2.0 '= "HTTP20")
+```
+
+```{r}
+load('/Users/hsuwanying/Documents/IDS2020_2022/4th_semester/Master_thesis/data/form.rda')
+```
+
+```{r}
+head(form)
+```
+
+```{r}
+form<-form %>%
+  mutate(label = as.factor(label),
+         language = as.factor(language),
+         server_protocol= as.factor(server_protocol),
+         source = as.factor(source))
+```
+
+```{r}
+str(form)
+```
+
+
+
+# Data Exploration
+```{r}
+introduce(form)
+```
+
+```{r}
+plot_intro(form)
+```
+## Graphical analysis
+```{r}
+ggplot(data = form, aes(x = label, fill = label)) +
+  geom_bar() +
+  coord_flip() + 
+  geom_text(stat = "count", aes(label=..count..),size=3.5,position = position_stack(vjust = 0.5)) 
+png("label_distribution.png", width = 15, height = 10, units = "cm", res = 300)
+```
+
+
+```{r}
+plot_bar(form, by = 'label')
+```
+
+### Continous variables
+"flag_count", "asn_perc", "ip_perc", "domain_perc","email_perc","host_perc",
+"name_perc","phone_perc","hour","msg_length", "sub_length"
+
+
+```{r}
+png(file="/Users/hsuwanying/Documents/IDS2020_2022/4th_semester/Master_thesis/qqplot_.png",
+width=600, height=350)
+plot_qq(form[,c("label","flag_count", "asn_perc", "ip_perc", "domain_perc","email_perc","host_perc","name_perc","phone_perc","hour","msg_length", "sub_length")], by = "label")
+```
+
+
+  - use`histogram` to check data distribution
+```{r}
+
+plot_histogram(form[,c("label","flag_count", "asn_perc", "ip_perc", "domain_perc","email_perc","host_perc","name_perc","phone_perc","hour","msg_length", "sub_length")], nrow = 3)
+
+```
+ - `email_perc`, `msg_length`, `sub_length` are right skewed, hence, data scaling is considered
+
+ - use`boxplot` to check outliers
+ 
+
+```{r}
+#png(file="/Users/hsuwanying/Documents/IDS2020_2022/4th_semester/Master_thesis/num_var_histo.png",width=600, height=350)
+boxplot(form[,c("label","flag_count", "asn_perc", "ip_perc", "domain_perc","email_perc","host_perc","name_perc","phone_perc","hour","msg_length", "sub_length")], by = 'label')
+```
+
+```{r}
+plot_boxplot(form[,c("label","flag_count", "asn_perc", "ip_perc", "domain_perc","email_perc","host_perc","name_perc","phone_perc","hour","msg_length", "sub_length")], by = "label")
+```
+
+```{r}
+spam <- form[form$label == 'spam',]
+ham <- form[form$label == 'ham',]
+```
+
+
+```{r}
+plot_histogram(spam, nrow = 3)
+```
+
+```{r}
+plot_histogram(ham, nrow = 3)
+```
+
+```{r}
+plot_boxplot(spam, by = 'label')
+```
+
+```{r}
+plot_boxplot(ham, by = "label")
+```
+
+
+### Using statistic summary to find qutiles
+```{r}
+summary(form[, c("label","flag_count", "asn_perc", "ip_perc", "domain_perc","email_perc","host_perc","name_perc","phone_perc","hour","msg_length", "sub_length")])
+```
+
+
+The histgram, boxplot and statistic summary are used to analyze distribution about continuous variables versue target variable `label`. 
+ - the number of flag check `flag_count` in spam spreads out from 3 to 25, whereas, the range is comparatively smaller in ham web forms
+ - There are some extreme values found in both messages(msg_length) and subject line(sub_length), the messages length has a maximum 28634 words and 128 in subject line. some outliers also observed when looking at boxplots of name_perc and phone_perc
+ 
+
+### check predict values `source` vs actual value `label`
+```{r}
+table(form$source)
+table(form$label)
+```
+
+
+## Create Confurion Matrix
+```{r}
+# make a table of actual value and predict value
+tab <- table(Actual = form$label, Prediction = form$source)
+
+conmax <- as_tibble(tab)
+conmax
+```
+
+```{r}
+plot_confusion_matrix(conmax, 
+                      prediction_col = "Prediction",
+                      target_col = "Actual",
+                      counts_col = "n")
+
+```
+
+positive class `label` = 'spam' accounts for 96.8% whereas, `label` = 'ham' only 2.6%, 
+
+
+### remove predict value column `source`
+```{r}
+final_df <- subset(form, select = -c(source))
+final_df<- final_df %>%
+  relocate(label, .before = server_protocol)
+head(final_df)
+```
+
+# Scale continouse predictors based on output of boxplot, histpgram and summary results
+```{r}
+num_var <- c("flag_count", "asn_perc", "ip_perc", "domain_perc","email_perc","host_perc","name_perc","phone_perc","hour","msg_length", "sub_length")
+```
+
+Logistic regression is one of the Gradient Descent Based Algorithms, it is an 
+
+```{r}
+scale_df <- final_df
+scale_df[, c(num_var)] = scale(scale_df[, c(num_var)], center = FALSE, scale = TRUE)
+plot_boxplot(scale_df, by = 'label')
+```
+
+```{r}
+boxplot(scale_df[, c(num_var)])
+```
+
+```{r}
+summary(scale_df[, c(num_var)])
+```
+
+```{r}
+scale_df <- final_df %>%
+  mutate_at(c("email_perc","flag_count", "name_perc", "phone_perc", "msg_length", "sub_length"), ~(scale(.) %>% as.vector))
+head(scale_df)  
+```
+
+```{r}
+plot_boxplot(scale_df, by ='label')
+```
+
+
+### In sample fit all predictor using scale_df
+```{r}
+logit.all <- glm(label ~., data = scale_df, family=binomial)
+summary(logit.all)
+```
+
+## Feature Importance using Boruta
+Boruta is one of feature selection algorithms, which is capable of working with any classification method that output variable importance measure (VIM). Boruta uses Random Forest. The method performs a top-down search for relevant features by comparing original attributes' importance with importance achievable at random, estimated using their permuted copies, and progressively eliminating irrelevant features to stabilise that test.
+
+References
+Miron B. Kursa, Witold R. Rudnicki (2010). Feature Selection with the Boruta Package. Journal of Statistical Software, 36(11), p. 1-13. URL: http://www.jstatsoft.org/v36/i11/
+```{r}
+citation(package = "Boruta", lib.loc = NULL, auto = NULL)
+```
+
+```{r}
+boruta <- Boruta(label ~., data = final_df, doTrace =2)
+```
+
+```{r}
+save(final_df, file = "final_df.RData")
+save(boruta,boruta_signif, file = "boruta.RData")
+save.image(file = "my_thesis.RData")
+```
+
+
+```{r}
+load('/Users/hsuwanying/Documents/IDS2020_2022/4th_semester/Master_thesis/submission/update_report/boruta.RData')
+print(boruta)
+```
+
+
+```{r}
+boruta_signif <- names(boruta$finalDecision[boruta$finalDecision %in% c("Confirmed", "Tentative")])  
+# collect Confirmed and Tentative variables
+print(boruta_signif)  # significant variables
+```
+
+```{r}
+plot(boruta, cex.axis=.5, las=2, xlab="", main="Variable Importance")  # plot variable importance
+```
+
+# Get not regeject formular from boruta
+74 attributes confirmed important + 8 tentative, a total 82 features are selected
+```{r}
+formular82 <- getNonRejectedFormula(boruta)
+```
+
+```{r}
+plotImpHistory(boruta)
+```
+## Tentative Fix
+```{r}
+ten.fix <- TentativeRoughFix(boruta)
+```
+
+```{r}
+print(ten.fix)
+```
+
+```{r}
+attStats(boruta)
+```
+
+# Create Data Partition
+```{r}
+set.seed(222)
+indices <- createDataPartition(scale_df$label, p = 0.8, list = FALSE)
+train <- scale_df %>% slice(indices)
+test <- scale_df %>% slice(-indices)
+```
+
+## check classes of train and test dataset
+```{r}
+table(train$label)
+table(test$label)
+```
+
+# Model building
+
+## Logistic Regression Fit all parameters
+```{r}
+set.seed(1234)
+logit.full <- glm(label ~., data = train, family=binomial)
+summary(logit.full)
+```
+###Interptation log.full summary
+
+ - 6 variables: is_server, is_language ,HOSTNAME_NO_REVERSE , MESSAGE_EMPTY , MESSAGE_REPEATING_TEXT,  SENDER_NAME_DIGITS have no information 
+
+```{r}
+set.seed(1234)
+logit.2 <- update(logit.full, . ~ . -is_server, data = train)
+summary(logit.2)
+```
+
+```{r}
+set.seed(1234)
+logit77 <- update(logit78, . ~ . -MESSAGE_EMPTY, data = train)
+summary(logit77)
+```
+
+
+# Decision Tree
+First fit an unpruned classification tree using all predictors
+```{r}
+set.seed(1234)
+tree.full <- rpart(label ~., data=train, method="class")
+tree.full
+
+fancyRpartPlot(tree.full)
+rpart.rules(tree.full)
+```
+
+
+```{r}
+tree82 <- rpart(formular82, data = train, method="class")
+
+fancyRpartPlot(tree82)
+rpart.rules(tree82)
+```
+
+```{r}
+table(final_df$is_server)
+table(final_df$is_language)
+table(final_df$HOSTNAME_NO_REVERSE)
+table(final_df$MESSAGE_EMPTY)
+table(final_df$MESSAGE_REPEATING_TEXT)
+table(final_df$SENDER_NAME_DIGITS)
+```
+
+
+# Random Forest
+First fit using all predictors
+```{r}
+set.seed(1234)
+rf.full <- randomForest(label~., data = train)
+rf.full
+```
+
+```{r}
+rf84 <- randomForest(label ~ accept_language + msg_length + asn_perc + ip_perc + host_perc + 
+    domain_perc + name_perc + phone_perc + email_perc + is_asn + 
+    is_hostname + is_domain + is_server + is_language + is_name + 
+    is_phone + is_email + is_subject + is_msg + is_weekend + 
+    hour + sub_length + msg_long + email_in_msg + url_in_msg + 
+    flag_count + MESSAGE_CHAR_METRICS + MESSAGE_NOT_SET + IN_SFS + 
+    IP_SYNTAX + HEADERS + MESSAGE_NAME_MATCH + ACCEPT_PATTERN + 
+    SENDER_DOMAIN_SERVER_MATCH + ACCEPT_LANG_NULL + HOSTNAME_NO_REVERSE_MATCH + 
+    COMPANY_PATTERN + MESSAGE_HOSTNAMES + HOSTNAME_REVERSE_MATCH + 
+    HOSTNAME_NO_REVERSE + SUBJECT_RECURRING + NAME_PATTERN + 
+    PHONE_PATTERN + MESSAGE_WORD_FREQUENCY + MESSAGE_EMPTY + 
+    IP_NO_HOSTNAME + MESSAGE_URL_SPAM + MESSAGE_CYRILLIC_CHARS + 
+    IP_IN_SPBL + MESSAGE_URL_PATTERN + SENDER_NAME_PATTERN + 
+    MESSAGE_LINKS + MESSAGE_NO_PUNCTUATION + SENDER_EMAIL_REPUTATION + 
+    SENDER_EMAIL_SYNTAX + IP_IN_BCC + IP_IN_SPHZ + SENDER_DOMAIN_NO_A + 
+    SENDER_DOMAIN_NO_MX + MESSAGE_SHORT + IP_REPUTATION + MESSAGE_CHARACTERS + 
+    SUBJECT_CHARACTERS + MESSAGE_REPEATING_WORDS + MESSAGE_REPEATING_TEXT + 
+    SUBJECT_PATTERN + SENDER_NAME_SYNTAX + SENDER_HOSTNAME_PATTERN + 
+    MESSAGE_PATTERN + SENDER_DOMAIN_SYNTAX + SUBJECT_NON_LATIN + 
+    SENDER_FREEMAIL_DOMAIN + MESSAGE_URLS + SENDER_TLD + SENDER_NAME_DIGITS + 
+    `HTTP10` + `HTTP11` + `HTTP20` + server_protocol_unknown + language_any + 
+    language_de + language_en + language_others + language_unknown, data = train)
+rf84
+```
+
+```{r}
+set.seed(1234)
+rf84.100 <- randomForest(label ~ accept_language + msg_length + asn_perc + ip_perc + host_perc + 
+    domain_perc + name_perc + phone_perc + email_perc + is_asn + 
+    is_hostname + is_domain + is_server + is_language + is_name + 
+    is_phone + is_email + is_subject + is_msg + is_weekend + 
+    hour + sub_length + msg_long + email_in_msg + url_in_msg + 
+    flag_count + MESSAGE_CHAR_METRICS + MESSAGE_NOT_SET + IN_SFS + 
+    IP_SYNTAX + HEADERS + MESSAGE_NAME_MATCH + ACCEPT_PATTERN + 
+    SENDER_DOMAIN_SERVER_MATCH + ACCEPT_LANG_NULL + HOSTNAME_NO_REVERSE_MATCH + 
+    COMPANY_PATTERN + MESSAGE_HOSTNAMES + HOSTNAME_REVERSE_MATCH + 
+    HOSTNAME_NO_REVERSE + SUBJECT_RECURRING + NAME_PATTERN + 
+    PHONE_PATTERN + MESSAGE_WORD_FREQUENCY + MESSAGE_EMPTY + 
+    IP_NO_HOSTNAME + MESSAGE_URL_SPAM + MESSAGE_CYRILLIC_CHARS + 
+    IP_IN_SPBL + MESSAGE_URL_PATTERN + SENDER_NAME_PATTERN + 
+    MESSAGE_LINKS + MESSAGE_NO_PUNCTUATION + SENDER_EMAIL_REPUTATION + 
+    SENDER_EMAIL_SYNTAX + IP_IN_BCC + IP_IN_SPHZ + SENDER_DOMAIN_NO_A + 
+    SENDER_DOMAIN_NO_MX + MESSAGE_SHORT + IP_REPUTATION + MESSAGE_CHARACTERS + 
+    SUBJECT_CHARACTERS + MESSAGE_REPEATING_WORDS + MESSAGE_REPEATING_TEXT + 
+    SUBJECT_PATTERN + SENDER_NAME_SYNTAX + SENDER_HOSTNAME_PATTERN + 
+    MESSAGE_PATTERN + SENDER_DOMAIN_SYNTAX + SUBJECT_NON_LATIN + 
+    SENDER_FREEMAIL_DOMAIN + MESSAGE_URLS + SENDER_TLD + SENDER_NAME_DIGITS + 
+    `HTTP10` + `HTTP11` + `HTTP20` + server_protocol_unknown + language_any + 
+    language_de + language_en + language_others + language_unknown, data = train, ntree = 100)
+rf84.100
+```
+
+
+# Make predictions
+```{r}
+# logit.full 
+logit.full.pred <-  predict(logit.full, newdata = test,type = "response")
+logit.full.Est <- (logit.full.pred > 0.5)
+logit.full.True <- (test$label == 'spam')
+logit.full.tab <- table(pred = logit.full.Est, truth = logit.full.True)
+print()
+#logit.full.matrix <- confusionMatrix(logit.full.tab, positive = 'TRUE')
+#logit.full.matrix
+
+```
+
+```{r}
+tree.full.pred <- predict(tree.full, test, type="class")
+tree.full.tab <- table (pred = tree.full.pred, truth = test$label)
+tree.full.matrix <- confusionMatrix(tree.full.tab, positive = 'spam')
+tree.full.matrix
+```
+
+
+```{r}
+rf.full.pred <- predict(rf.full, test)
+rf.full.tab <- table(rf.full.pred,test$label)
+rf.full.matrix <- confusionMatrix(rf.full.tab, positive = 'spam')
+rf.full.matrix
+```
+
+
+
+```{r}
+# logit84
+logit84.pred <-  predict(logit84, newdata = test, type = "response")
+logit84.Est <- (logit84.pred > 0.5)
+logit84.True <- (test$label == 'spam')
+logit84.tab <- table(pred = logit84.Est, truth = logit84.True)
+
+logit84.matrix <- confusionMatrix(logit84.tab, positive = 'TRUE')
+logit84.matrix
+
+#acccuracy
+logit84.acc <- logit84.matrix$overall['Accuracy']
+#error rate
+logit84.err <-  (1- logit84.acc)
+#recall TP/TP+FN => True positive rate
+logit84.recall <- 11220/(11220+15)
+#precision TP/ TP+FP
+logit84.precision <- 11220/(11220+14)
+#false positive rate FP/FP+TN
+logit84.fpr <- 14/(14+293)
+#F1 score 2*(precision*recall/precision +recall)
+logit84.f1<- 2*(logit84.precision*logit84.recall/(logit84.precision + logit84.recall))
+
+logit84.df <- data.frame(Accueacy =round((logit84.acc),4), Error_rate = round((logit84.err),4),
+                           Recall = round((logit84.recall),4), Precision = round((logit84.precision),4),
+                           FP_rate = round((logit84.fpr),4), F1 = round((logit84.f1),4))
+logit84.df
+
+```
+
+```{r}
+tree84.pred <- predict(tree84, test, type="class")
+
+tree84.tab <- table(pred = tree84.pred, truth = test$label)
+
+tree84.matrix <- confusionMatrix(tree84.tab, positive = 'spam')
+tree84.matrix
+
+#Accuracy
+tree84.acc <- tree84.matrix$overall['Accuracy']
+# error rate
+tree84.err <-  (1- tree84.acc)
+#recall TP/TP+FN => True positive rate
+tree84.recall <- 11222/(11222+24)
+#precision TP/ TP+FP
+tree84.precision <- 11222/(11222+12)
+#false positive rate FP/FP+TN
+tree84.fpr <- 12/(12+284)
+tree84.f1<- 2*(tree84.precision*tree84.recall/(tree84.precision +tree84.recall))
+
+tree84.df <- data.frame(Accueacy =round((tree84.acc),4), Error_rate = round((tree84.err),4),
+                           Recall = round((tree84.recall),4), Precision = round((tree84.precision),4),
+                           FP_rate = round((tree84.fpr),4), F1 = round((tree84.f1),4))
+tree84.df
+```
+
+
+```{r}
+# simple model
+logit.simple <- glm(label ~ accept_language + msg_length + asn_perc + ip_perc + host_perc + 
+    domain_perc + name_perc + phone_perc + email_perc + is_asn + 
+    is_hostname + is_domain + is_server + is_language + is_name + 
+    is_phone + is_email + is_subject + is_msg + is_weekend + 
+    hour + sub_length + msg_long + email_in_msg + url_in_msg + 
+    flag_count + `HTTP10` + `HTTP11` + `HTTP20` + server_protocol_unknown + language_any + 
+    language_de + language_en + language_others + language_unknown, data = train, family=binomial)
+summary(logit.simple)
+```
+
+```{r}
+# Build a CART model
+CART.simple <- rpart(label ~ accept_language + msg_length + asn_perc + ip_perc + host_perc + 
+    domain_perc + name_perc + phone_perc + email_perc + is_asn + 
+    is_hostname + is_domain + is_server + is_language + is_name + 
+    is_phone + is_email + is_subject + is_msg + is_weekend + 
+    hour + sub_length + msg_long + email_in_msg + url_in_msg + 
+    flag_count + HTTP10 + HTTP11 + HTTP20 + server_protocol_unknown + language_any + 
+    language_de + language_en + language_others + language_unknown, data=train, method="class")
+prp(CART.simple)
+```
+
+```{r}
+set.seed(123)
+rf.simple <- randomForest(label ~ accept_language + msg_length + asn_perc + ip_perc + host_perc + 
+    domain_perc + name_perc + phone_perc + email_perc + is_asn + 
+    is_hostname + is_domain + is_server + is_language + is_name + 
+    is_phone + is_email + is_subject + is_msg + is_weekend + 
+    hour + sub_length + msg_long + email_in_msg + url_in_msg + 
+    flag_count + HTTP10 + HTTP11 + HTTP20 + server_protocol_unknown + language_any + 
+    language_de + language_en + language_others + language_unknown, data=train)
+
+rf.simple
+```
+
+```{r}
+pred.logit.simple <-  predict(logit.simple, type="response")
+pred.logit.simple > 0.5
+
+pred.CART.simple <- predict(CART.simple)[,2]
+table(test$spam, pred.CART.simple > 0.5)
+pred.rf.simple <- predict(rf.simple, type="prob")[,2] 
+```
+
+
+
+
+
+
+
+
+
+
+
