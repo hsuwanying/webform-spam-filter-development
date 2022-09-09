@@ -1,5 +1,5 @@
 <p align = "center">
-<img src = "https://user-images.githubusercontent.com/72688726/187232061-26b99efe-2e5b-4cd3-a354-385624b1ed06.jpg">
+<img width="600" src = "https://user-images.githubusercontent.com/72688726/187232061-26b99efe-2e5b-4cd3-a354-385624b1ed06.jpg">
 </p>
 <p align = "center">Photo by
  <a href="https://unsplash.com/@paucasals?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Mediocre Studio</a> on <a href="https://unsplash.com/s/photos/spam?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
@@ -52,7 +52,7 @@ To address the above issues, applying data analysis to generate spam patterns an
 There are 60021 rows and 19 columns in the original dataset, and the target variable `label` is binary data with two classes, `spam,` and `ham`. The image below shows the spam and ham messages distribution in the original dataset. 
 
 <p align = "center">
- <img width="700" alt="label" src = "https://user-images.githubusercontent.com/72688726/187207906-2581e40c-750f-444c-81dd-04a7d547ba24.png">
+ <img width="600" alt="label" src = "https://user-images.githubusercontent.com/72688726/187207906-2581e40c-750f-444c-81dd-04a7d547ba24.png">
  </p><p align = "center">Target variable: Label
 </p>
 
@@ -63,7 +63,7 @@ There are 60021 rows and 19 columns in the original dataset, and the target vari
    `server_protocol` with `HTTP/1.0`, `HTTP/1.1`, and unknown have a high account of the spam web form, whereas 95% of legitimate users use server_protocol `HTTP/2.0`. The image below indicates the number of web forms in each class and the corresponding server_protocol value.
 
 <p align = "center">
- <img width="700" alt="server_pprotocol" src="https://user-images.githubusercontent.com/72688726/187211702-bb381ba4-975f-46e4-aaed-808ef48f84b4.png">
+ <img width="600" alt="server_pprotocol" src="https://user-images.githubusercontent.com/72688726/187211702-bb381ba4-975f-46e4-aaed-808ef48f84b4.png">
  </p><p align = "center">preditc variable: server_pprotocol
 </p>
 
@@ -71,7 +71,7 @@ There are 60021 rows and 19 columns in the original dataset, and the target vari
    a`ccept_language = 0` means this field does not exist in metadata and is 100% likely to be spam; this can be a good indicator for detecting spam web forms. In contrast, if `accept_language = 1` exists in the metadata, it is 59% likely to be spam and 41% ha. The image below shows the number of web forms in each class and the corresponding accept_language value.
 
 <p align = "center">
- <img width="700" alt="acceptlanguage" src="https://user-images.githubusercontent.com/72688726/187211758-3e78835a-ced8-4944-a084-476c50381367.png">
+ <img width="600" alt="acceptlanguage" src="https://user-images.githubusercontent.com/72688726/187211758-3e78835a-ced8-4944-a084-476c50381367.png">
  </p><p align = "center">preditc variable: accept_language
 </p>
 
@@ -79,14 +79,14 @@ There are 60021 rows and 19 columns in the original dataset, and the target vari
    The header field `is_cookie` is empty and is very likely to be spam; one can confirm that nearly 100 % of `is_cookie = 0` is spam which can be used to separate forms. The below image shows the number of web forms in each class and the corresponding is_cookie value.
 
 <p align = "center">
- <img width="700" alt="cookies" src="https://user-images.githubusercontent.com/72688726/187211768-aea7deb9-1226-4b55-8720-b3200506c63e.png">
+ <img width="600" alt="cookies" src="https://user-images.githubusercontent.com/72688726/187211768-aea7deb9-1226-4b55-8720-b3200506c63e.png">
  </p><p align = "center">preditc variable: accept_language
 </p>
 
  - **Flag_count**: flag_count refers to the number of spam checks applied in an observation. As seen in the graph below, the histogram on the left shows that the number of flag counts ranges from 4 to 14; in contracts, the number of flag counts in spam messages is 23, widespread from 3 to 25. More, the boxplot on the right indicates the quantile distribution of flag_count. It is visible that once a web form is checked with more than 14 rules, it is more likely to be spam. Therefore flag_count can be a good indicator for detecting spam forms.
 
 <p align = "center">
- <img width="700" alt="flag_count" src="https://user-images.githubusercontent.com/72688726/187214227-c5958f8a-fb91-43c5-9260-fc4b5cf0833a.png">
+ <img width="600" alt="flag_count" src="https://user-images.githubusercontent.com/72688726/187214227-c5958f8a-fb91-43c5-9260-fc4b5cf0833a.png">
  </p><p align = "center">preditc variable: accept_language
 </p>
 
@@ -95,7 +95,7 @@ There are 60021 rows and 19 columns in the original dataset, and the target vari
 To identify spam patterns, analysis of sender behavior is one of the spam detection techniques, *occurrence*, *past activity,* and *user networks. For instance, IP addresses can effectively capture spam messages. User-related features such as name, phone, email, and contact frequency are calculated and transformed into a percentage, representing each observation's occurrence.
 
 <p align = "center">
- <img width="700" alt="continous variables" src="https://user-images.githubusercontent.com/72688726/187214391-e6afcbd4-9b52-4be0-b33e-de4407882e8a.png">
+ <img width="600" alt="continous variables" src="https://user-images.githubusercontent.com/72688726/187214391-e6afcbd4-9b52-4be0-b33e-de4407882e8a.png">
  </p><p align = "center">Box Plot: Continous variables
 </p>
 
@@ -107,7 +107,7 @@ According to the density graph, we found:
 4. In contrast, regular users show a few repetitions across all activity features, which means the legitimate user may use only one or twice contact forms to reach out to a web host. Spammers are more likely to continue sending junk messages.
 
 <p align = "center">
-<img width="700" alt="density" src="https://user-images.githubusercontent.com/72688726/187214280-267ee5e8-35a1-4115-94ed-9885a3afda6b.png">
+<img width="600" alt="density" src="https://user-images.githubusercontent.com/72688726/187214280-267ee5e8-35a1-4115-94ed-9885a3afda6b.png">
  </p><p align = "center">Density Plot: Continous variables
 </p>
 
@@ -126,7 +126,7 @@ According to the density graph, we found:
 When building a machine learning model, having too many features brings issues such as the curse of dimensionality, besides the need for more memory, processing time, and power. In this case, Boruta (Miron, 2020) is applied as it can work with both categorical and numeric predictors and provide a better outcome than applying a correlation matrix, and it can be supplemetary method to select important features for fitting logistic regression model, 
 
 <p align ="center">
- <img width="700" alt="Boruta" src="https://user-images.githubusercontent.com/72688726/187219980-049158da-6bf9-449d-b95e-9d988e08d8dc.png">
+ <img width="600" alt="Boruta" src="https://user-images.githubusercontent.com/72688726/187219980-049158da-6bf9-449d-b95e-9d988e08d8dc.png">
  </p><p align = "center"> Feature Selection: Boruta
 </p>
 
@@ -154,7 +154,7 @@ AIC is used to select a logistic model, as the fewer features, the better due to
    An optimal decision tree is created by using the values generated above. In this model, predictors, namely server_protocol, MESSAGE_URL_SPAM, accept_language, is_cookies, and IP_REPUTATION, are used as terminal notes for decision-making.
    
 <p align ="center">
- <img width="700" alt="pruning_tree" src="https://user-images.githubusercontent.com/72688726/187228602-c57f09e9-c93b-42f0-a141-e998575ea2bb.png">
+ <img width="600" alt="pruning_tree" src="https://user-images.githubusercontent.com/72688726/187228602-c57f09e9-c93b-42f0-a141-e998575ea2bb.png">
  </p><p align = "center"> Classification Tree Pruning
 </p>
 
@@ -162,14 +162,14 @@ AIC is used to select a logistic model, as the fewer features, the better due to
 - **Experiment 3: Random Forest**
    The RF model first fitted all predictors with default settings in the `randomForest()` package. To improve the false positive rate, pruning tree is critical in building tree models. A significant drop is observed when growing 100 trees. However, the error rate becomes less visible and cannot be improved after using 300 trees. `tuneRF` and parameter `entry` is used for tuning trees.
 <p align ="center">
- <img width="700" alt="rf_pruning" src="https://user-images.githubusercontent.com/72688726/187229346-7afa54d6-da5f-4314-833c-0e178ed63746.png">
+ <img width="600" alt="rf_pruning" src="https://user-images.githubusercontent.com/72688726/187229346-7afa54d6-da5f-4314-833c-0e178ed63746.png">
  </p><p align = "center"> Randon Forest Pruning
 </p>
 
 <br>
 Confusion matrix, cross-validation, ROC, and AUC curves, are used to evaluate classifiers. The image below presents the performance of the FormCheck spam filter, Prediction refers to the value of the source column, and Target refers to the actual value of the label column.
 <p align ="center">
- <img width="700" alt="Cofusion_matrix" src="https://user-images.githubusercontent.com/72688726/187224895-0a8825b4-e431-4637-aab9-1da98f715790.png">
+ <img width="600" alt="Cofusion_matrix" src="https://user-images.githubusercontent.com/72688726/187224895-0a8825b4-e431-4637-aab9-1da98f715790.png">
  </p><p align = "center"> Confusion Matrix
 </p>
 
@@ -187,7 +187,7 @@ Three models: Logistic Regression, Decision Tree, and Radom Forest, are evaluate
 <br>
 This research aims to find a model that maximizes the predictive performance of classifying spam web forms. Data were split into training and testing sets for model fitting and were accessed by applying 10-fold cross-validation.
 <p align ="center">
- <img width="700" alt="cv-test" src="https://user-images.githubusercontent.com/72688726/187224342-4c9298dd-5320-4570-a02d-a77ad954a97d.png">
+ <img width="600" alt="cv-test" src="https://user-images.githubusercontent.com/72688726/187224342-4c9298dd-5320-4570-a02d-a77ad954a97d.png">
  </p><p align = "center"> Cross Validation
 </p>
 
@@ -196,7 +196,7 @@ This research aims to find a model that maximizes the predictive performance of 
 In tree-based models, the function `varImpPlot()` allows us to examine the essential features of the proposed models with graphical output. Variable importance measures the contribution of each variable by assessing the mean decrease in accuracy. The lower the value, the less critical toward a model; the mean decreased Gini measures the purity of the end nodes of branches in a model; the lower the Gini value, the better the feature can impact the decision.
 
 <p align ="center">
- <img width="700" alt="variable_importance" src="https://user-images.githubusercontent.com/72688726/187223129-f346f58a-34d3-4f91-ad39-8c3715394142.png">
+ <img width="600" alt="variable_importance" src="https://user-images.githubusercontent.com/72688726/187223129-f346f58a-34d3-4f91-ad39-8c3715394142.png">
  </p><p align = "center"> Variable Importance
 </p>
 
@@ -216,13 +216,14 @@ Features used in the logistic regression are very different from the other two m
 This research has shown an improvement in assessments such as acracy, error rate, and specificity with all proposed classifiers, which proves that a spam filter designed with a machine learning approach can achieve as good performance as a rule-based protocol and the spam classifier built with random forest model has the best performance amongst other classifiers. Nevertheless, as spam detection techniques evolve from time to time, more advanced techniques or influential factors need to be considered. Three recommendations are provided as follows:
 
  - **Establish Data collection and processing strategies**
-Through the research process, features extracted from the header fields play significant roles that impact the spam recognition process, echoing previous research and study findings. Hence, clear guidance and data collection strategies are essential to improve data quality and the spam filter system.
+During the data preprocessing stage, we found mamy data fields are missing becasue there was no guideline in terms of data collection, hence, establishing a clear guidance and data collection strategies are essential to improve data quality of spam filter system.
 
  - **Essential Features and rules adjustment**
-New features, namely `server_protocol`, `is_cookies`, `accept_language`, `ACCEPT_LANG_NULL`, `flag_count`, and `MESSAGE_URLS` frequently appear when modeling decision trees and random forest and thus suggest to add to the existing rule-based system. However, these new features need to be compared with the existing rules to make sure no overlapping exists in the current system; on the other hand, overlapping attributes, for instance: message repeat words and message repeated texts to prevent collinearity issue. 
+We found the header features play significant roles that impact the spam recognition process, which is echoing literatures and previous research, features namely `server_protocol`, `is_cookies`, `accept_language`, `ACCEPT_LANG_NULL`, `flag_count`, and `MESSAGE_URLS` frequently appear when modeling decision trees and random forest and thus suggest to add to the existing rule-based system. However, these new features need to be compared with the existing rules in case data overlapping and collinearity issues. 
 
  - **Apply alternative machine learning methods for handling multi-class tasks**
-In the original data, we found some webforms are using customerized texts which are used for signing up newsletter, request product catalogs or registration, these types of web forms have identical or similar contents in the body text area, which makes the labeling process challenging to judge without comparing external data. Although the end goal of the spam filter is to output binary values, a machine that can determine an uncertain message would help reduce the negative impact of labeling a legitimate user as a spammer. Therefore, machine learning methods such as deep learning or recursive learning techniques would be ideal for handling multi-class tasks.
+Although the end goal of the spam filter is to output binary values, a machine that can determine an uncertain message would help reduce the negative impact of labeling a legitimate user as a spammer. Therefore, machine learning methods such as deep learning or recursive learning techniques would be ideal for handling multi-class tasks.
+
 
 # Project Reflection
 From a methodological aspect, I used alggorithm methods for building spam detection models, which may not be diverse as there are several algorithms models, namely Naïve Bayes, Support Vector Machine, or Neural Network, are also popular for handling classification problems. Therefore, the obtained results from this research can be questioned. Nonetheless, the results with testing data has reached the desired outcome, which implied that the three classifiers proposed in this research had achieved satisfactory performance despite failing to improve the false-positive rate. 
