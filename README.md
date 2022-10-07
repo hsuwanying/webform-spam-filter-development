@@ -29,11 +29,10 @@ Master Thesis is submitted as part of the MSc in Applied Information and Data Sc
  # Background
 With the increasing usage of websites, web form has also become a new target for malware. Spammers often dump bulk messages that will blow up one’s inbox, steal data, or harm websites by setting bugs or displaying harmful messages on a webpage. All the above would result in more problematic outcomes that can hurt a business's reputation, digital presence, and financial loss.
  
-# [FormCheck](https://marketvision.ch/webdesign/formcheck-formular-spam-schutz/)
-Webform Spam Filter, a rule-based spam filter system, is designed for detecting spam web forms. It utilizes a series of rules which includes: block list, IPs Addresses, domain providers, text categorization, and regular expression techniques to measure attributes and their properties.
-
 # Business Problem
-A rule-based spam filter is commonly used in spam development due to its robust mechanism and outstanding performance detecting spam messages, as the rules are set by humans, it can make the machine very sensitive to suspicious messages and misclassify legitimate ones into a spam class. In addtion, the predefine rules need to be adjusted manually, which is insufficien with the increasing volume of web form spam, therefore, a more efficient way to classify web form data is required.
+
+[FormCheck](https://marketvision.ch/webdesign/formcheck-formular-spam-schutz/) - a spam classifier which is designed for detecting spam forms send via websites. It follow a rule-based mechanism with regular expression techniques to form a series of spam check includes: block list, DSN, IPs Addresses, domain providers and text categorization. Each rule is measured, then, a corresponding score is given based on some statistical calculations. Despite its robust system and outstanding performance for detecting spam messages, the machine is very sensitive to suspicious messages and misclassify legitimate ones into a spam class, in addtion, the predefine rules is currently adjusted manually by the developer, which is insufficien with the increasing volume of web form spam, therefore, a more efficient way to classify web form data is required.
+
 
 # Solution
 To address the above issues, applying data analysis to generate spam patterns and insights into current features is a prerequisite in the spam filter development process, then developing a classification model that can achieve high accuracy and low false positive rate. Lastly, essential features of the spam filter performance are provided, and recommendations are given accordingly.
