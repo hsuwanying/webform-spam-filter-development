@@ -5,8 +5,8 @@
  <a href="https://unsplash.com/@paucasals?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Mediocre Studio</a> on <a href="https://unsplash.com/s/photos/spam?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 </p>
 
-# FromCheck - A Spam Detection Software Alternative for Website Owners
-### Building a spam classier with a machine learning approach
+# FromCheck - An effective spam filter alternative to reCapture
+### Building a spam classier with a machine learning approach - A spam detection software for website owners
 
 This research discusses theoretical aspects of spam filtering, web structure, and internet communication and comparing web forms and email data structure lays the fundament for creating a spam filter architecture. Popular machine learning techniques with classification functions, namely Logistic Regression, Decision Tree, and Random Forest, are chosen for fitting models. Confusion matrix and cross-validation are deployed to estimate the test errors of proposed models. The result shows the Random Forest model has outperformed in classifying spam classes and has achieved 99% accuracy with the least test error rate of 0.1%. Insights generated through this research have provided recommendations for future adjustments to the FormCheck spam filter. 
 <br>
